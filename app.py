@@ -39,6 +39,17 @@ def index():
                 grouped[cat] = categories[cat]
         slot_items[slot['name']] = grouped
 
+    # Build a map of assetFile -> item for quick lookup in the frontend
+    items_map = {}
+    for cat, items in items_data.items():
+        for item in items:
+            try:
+                asset = item.get('assets', {}).get('assetFile') if isinstance(item, dict) else None
+                if asset:
+                    items_map[asset] = item
+            except Exception:
+                continue
+
     # Calculate max width/height per slot from the actual image files
     slot_sizes = {}
     for slot in slots:
@@ -74,7 +85,7 @@ def index():
             max_h = 100
         slot_sizes[slot['name']] = {'w': max_w, 'h': max_h}
 
-    return render_template('index.html', slots=slots, slot_items=slot_items, slot_sizes=slot_sizes)
+    return render_template('index.html', slots=slots, slot_items=slot_items, slot_sizes=slot_sizes, items_map=items_map)
 
 if __name__ == '__main__':
     app.run(debug=True)

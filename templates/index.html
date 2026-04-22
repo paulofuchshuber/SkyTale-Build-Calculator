@@ -48,6 +48,16 @@
                 <option value="epic">Épico</option>
                 <option value="legendary">Lendário</option>
             </select>
+
+            <label style="display:block;margin-top:6px;color:white;">Spec:</label>
+            <select id="spec-{{ loop.index0 }}" onchange="changeSpec({{ loop.index0 }})">
+                <option value="">— selecione spec —</option>
+            </select>
+
+            <div id="info-{{ loop.index0 }}" style="width:100%;margin-top:8px;font-size:12px;color:#ddd;">
+                <div><strong>Stats:</strong><div id="stats-{{ loop.index0 }}"></div></div>
+                <div style="margin-top:6px;"><strong>Requirements:</strong><div id="reqs-{{ loop.index0 }}"></div></div>
+            </div>
         </div>
     {% endfor %}
     </div>
@@ -60,6 +70,28 @@
             legendary: '#f1c40f'
         };
 
+        // Items map injected from backend
+        const ITEMS = {{ items_map | tojson }};
+
+        /*
+         * Regra dos Itens Especializados (tabela de modificadores)
+         * Cada entrada contém um intervalo {min, max} em decimal (ex: 0.05 = +5%, -0.25 = -25%).
+         * Destaque: a tabela abaixo reflete exatamente os intervalos fornecidos na especificação.
+         */
+        const SPEC_MODS = {
+            Mechanician: {strength: {min:0.05, max:0.10}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:-0.25, max:-0.15}},
+            Fighter:     {strength: {min:0.10, max:0.15}, intelligence: {min:-0.20, max:-0.15}, talent: null, agility: {min:-0.20, max:-0.15}},
+            Pikeman:     {strength: {min:0.10, max:0.15}, intelligence: {min:-0.20, max:-0.15}, talent: null, agility: {min:-0.25, max:-0.15}},
+            Archer:      {strength: {min:-0.25, max:-0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:0.15, max:0.25}},
+            Knight:      {strength: {min:0.05, max:0.15}, intelligence: {min:-0.15, max:-0.10}, talent: {min:0.05, max:0.10}, agility: {min:-0.25, max:-0.15}},
+            Atalanta:    {strength: {min:-0.20, max:-0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:0.15, max:0.25}},
+            Priestess:   {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.20}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}},
+            Mage:        {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.25}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}},
+            Shaman:      {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.25}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}},
+            Assassin:    {strength: {min:0.05, max:0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:-0.20, max:-0.15}},
+            Guerriera:   {strength: {min:0.05, max:0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:-0.20, max:-0.15}}
+        };
+
         function updateImage(idx){
             const s = document.getElementById('select-'+idx);
             const i = document.getElementById('img-'+idx);
@@ -70,22 +102,190 @@
                 i.src = val;
                 i.style.display = 'block';
                 ph.style.display = 'none';
-                // ensure image is centered by flexbox; no resizing
                 canvas.style.alignItems = 'center';
                 canvas.style.justifyContent = 'center';
+                // populate spec select and info
+                const item = ITEMS[val];
+                populateSpec(idx, item);
+                renderAll(idx, item);
             } else {
                 i.src = '';
                 i.style.display = 'none';
                 ph.style.display = 'block';
+                // clear spec and info
+                const spec = document.getElementById('spec-'+idx);
+                spec.innerHTML = '<option value="">— selecione spec —</option>';
+                document.getElementById('stats-'+idx).innerText = '';
+                document.getElementById('reqs-'+idx).innerText = '';
             }
         }
 
+        function populateSpec(idx, item){
+            const specEl = document.getElementById('spec-'+idx);
+            specEl.innerHTML = '<option value="">— selecione spec —</option>';
+            if(!item || !item.spec || !item.spec.primaryClass) return;
+            const classes = item.spec.primaryClass.split(/\s+/).filter(Boolean);
+            classes.forEach(c=>{
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.text = c;
+                specEl.appendChild(opt);
+            });
+        }
+
+        function changeSpec(idx){
+            const select = document.getElementById('select-'+idx);
+            const val = select.value;
+            if(!val) return;
+            const item = ITEMS[val];
+            renderAll(idx, item);
+        }
 
         function changeRarity(idx){
             const r = document.getElementById('rarity-'+idx).value || 'normal';
             const slot = document.getElementById('slot-'+idx);
             slot.style.border = '4px solid ' + (rarityColors[r] || rarityColors.normal);
             slot.style.borderRadius = '10px';
+            // re-render stats/reqs if item selected
+            const select = document.getElementById('select-'+idx);
+            const val = select.value;
+            if(val){
+                const item = ITEMS[val];
+                renderAll(idx, item);
+            }
+        }
+
+        function renderAll(idx, item){
+            if(!item) return;
+            const rarity = document.getElementById('rarity-'+idx).value || 'normal';
+            const spec = document.getElementById('spec-'+idx).value || '';
+            renderStats(idx, item, rarity);
+            renderReqs(idx, item, spec);
+        }
+
+        // Apply rarity bonuses to a shallow copy of stats and return a simple key->value object for display
+        function renderStats(idx, item, rarity){
+            const sub = item.subCategory || '';
+            const isWeapon = ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas'].includes(sub);
+            const isBootsOrGloves = ['botas','luvas'].includes(sub);
+            const isArmorOrRobe = ['armaduras','roupoes'].includes(sub);
+            const isShield = ['escudos','orbitais'].includes(sub);
+            const isBracelet = ['braceletes'].includes(sub);
+
+            // base stats - flatten for display, prefer min/max pairs when available
+            const out = {};
+            if(item.stats){
+                for(const k in item.stats){
+                    const v = item.stats[k];
+                    if(k === 'absorption'){
+                        const aMin = Number(item.stats['absorption'] || 0);
+                        const aMax = Number(item.stats['absorption_max'] || aMin);
+                        out['absorption'] = aMin + ' - ' + aMax;
+                        continue;
+                    }
+                    if (k === 'absorption_max') continue; 
+                    if(k === 'attackRating'){
+                        const aMin = Number(item.stats['attackRating'] || 0);
+                        const aMax = Number(item.stats['attackRating_max'] || aMin);
+                        out['attackRating'] = aMin + ' - ' + aMax;
+                        continue;
+                    }
+                    if (k === 'attackRating_max') continue;
+                    if(typeof v === 'level') out[k] = v;
+                    else if(v && v.min && v.min.min!==undefined) out[k] = v.min.min + ' - ' + (v.max && v.max.min ? v.max.min : v.min.max || v.min.min);
+                    else out[k] = JSON.stringify(v);
+                }
+            }
+
+            // apply rarity bonuses
+            let atkPowerBonus=0, atkRatingBonus=0, defBonus=0, absBonus=0;
+            if(rarity === 'rare'){
+                if(isWeapon){ atkPowerBonus = 4; atkRatingBonus = 10; }
+                if(isBootsOrGloves){ defBonus = 10; absBonus = 1; }
+                if(isArmorOrRobe){ defBonus = 30; absBonus = 1; }
+                if(isShield){ absBonus = 1; }
+                if(isBracelet){ atkRatingBonus = 10; }
+            } else if(rarity === 'epic'){
+                if(isWeapon){ atkPowerBonus = 8; atkRatingBonus = 20; }
+                if(isBootsOrGloves){ defBonus = 20; absBonus = 2; }
+                if(isArmorOrRobe){ defBonus = 60; absBonus = 2; }
+                if(isShield){ absBonus = 2; }
+                if(isBracelet){ atkRatingBonus = 20; }
+            } else if(rarity === 'legendary'){
+                if(isWeapon){ atkPowerBonus = 12; atkRatingBonus = 30; }
+                if(isBootsOrGloves){ defBonus = 30; absBonus = 3; }
+                if(isArmorOrRobe){ defBonus = 90; absBonus = 3; }
+                if(isShield){ absBonus = 3; }
+                if(isBracelet){ atkRatingBonus = 30; }
+            }
+
+            // apply to flattened out
+            if(atkPowerBonus && out.attackPower){
+                // attackPower might be a range string; try to parse and add
+                const parts = out.attackPower.toString().split('-').map(p=>parseInt(p));
+                if(parts.length===2 && !isNaN(parts[0])){
+                    out.attackPower = (parts[0]+atkPowerBonus) + ' - ' + (parts[1]+atkPowerBonus);
+                }
+            }
+            if(atkRatingBonus && out.attackRating && !isNaN(Number(out.attackRating))){
+                out.attackRating = Number(out.attackRating) + atkRatingBonus;
+            }
+            if(defBonus && out.defense){
+                // defense stored as range string
+                const parts = out.defense.toString().split('-').map(p=>parseInt(p));
+                if(parts.length===2 && !isNaN(parts[0])){
+                    out.defense = (parts[0]+defBonus) + ' - ' + (parts[1]+defBonus);
+                }
+            }
+            if(absBonus && out.absorption){
+                // out.absorption is a range like '4.8 - 5.3'
+                const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
+                if(parts.length===2 && !isNaN(parts[0])){
+                    out.absorption = ( (parts[0]+absBonus).toFixed(1) ) + ' - ' + ( (parts[1]+absBonus).toFixed(1) );
+                } else if(!isNaN(Number(out.absorption))){
+                    out.absorption = (Number(out.absorption) + absBonus).toFixed(1);
+                }
+            }
+
+            // render
+            const container = document.getElementById('stats-'+idx);
+            container.innerHTML = '';
+            for(const k in out){
+                const el = document.createElement('div');
+                el.textContent = k + ': ' + out[k];
+                container.appendChild(el);
+            }
+        }
+        function renderReqs(idx, item, spec){
+            const base = item.requirements || {};
+            const mods = SPEC_MODS[spec] || null;
+            const display = {};
+            // keys of interest
+            ['level','strength','intelligence','talent','agility'].forEach(k=>{
+                const v = base[k];
+                if(v===undefined) { display[k] = '-'; return; }
+                if(k==='level') { display[k] = v; return; }
+                if(mods && mods[k]){
+                    const pmin = mods[k].min;
+                    const pmax = mods[k].max;
+                    const low = Math.ceil(v * (1 + pmin));
+                    const high = Math.ceil(v * (1 + pmax));
+                    // ensure ascending order
+                    const mn = Math.min(low, high);
+                    const mx = Math.max(low, high);
+                    display[k] = mn + ' - ' + mx;
+                } else {
+                    display[k] = v;
+                }
+            });
+
+            const container = document.getElementById('reqs-'+idx);
+            container.innerHTML = '';
+            for(const k in display){
+                const el = document.createElement('div');
+                el.textContent = k + ': ' + display[k];
+                container.appendChild(el);
+            }
         }
 
         // initialize default borders on load
@@ -96,6 +296,13 @@
                 const r = document.getElementById('rarity-'+id);
                 if(r) changeRarity(id);
             });
+            // render spec mods table for visibility
+            try{
+                const el = document.getElementById('spec-table');
+                if(el){
+                    el.textContent = JSON.stringify(SPEC_MODS, null, 2);
+                }
+            }catch(e){console.warn(e)}
         });
     </script>
 </body>
