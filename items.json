@@ -23828,4 +23828,61 @@
       "name_en": "Bracelete Abissal"
     }
   ]
+  ,
+  "aneis": [
+    {
+      "stats": {
+        "hp": {
+          "min": { "min": 15, "max": 15 },
+          "max": { "min": 18, "max": 18 }
+        },
+        "stamina": {
+          "min": { "min": 44, "max": 44 },
+          "max": { "min": 61, "max": 61 }
+        }
+      },
+      "requirements": {
+        "level": 80,
+        "intelligence": 70
+      },
+      "spec": {
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Mage Shaman Assassin Guerriera"
+      },
+      "assets": {
+        "assetFile": "assets/items/itor120.jpg"
+      },
+      "id": "AN120",
+      "subCategory": "aneis",
+      "name_kr": "Anel Selado",
+      "name_en": "Anel Selado"
+    }
+  ],
+  "amuletos": [
+    {
+      "stats": {
+        "hp": {
+          "min": { "min": 18, "max": 18 },
+          "max": { "min": 24, "max": 24 }
+        },
+        "mana": {
+          "min": { "min": 30, "max": 30 },
+          "max": { "min": 36, "max": 36 }
+        }
+      },
+      "requirements": {
+        "level": 80,
+        "intelligence": 70
+      },
+      "spec": {
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Mage Shaman Assassin Guerriera"
+      },
+      "assets": {
+        "assetFile": "assets/items/itoa120.jpg"
+      },
+      "id": "AM120",
+      "subCategory": "amuletos",
+      "name_kr": "Amuleto Selado",
+      "name_en": "Amuleto Selado"
+    }
+  ]
 }

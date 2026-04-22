@@ -62,6 +62,11 @@
     {% endfor %}
     </div>
 
+    <div id="aggregate-panel" style="width:90%;max-width:900px;margin:20px auto;padding:12px;border:2px dashed #666;border-radius:8px;">
+        <h3 style="margin:0 0 8px 0;">Stats agregados (exclui Arma 1 e Arma 2)</h3>
+        <div id="aggregate-results" style="font-size:14px;color:#ddd;"></div>
+    </div>
+
     <script>
         const rarityColors = {
             normal: '#2ecc71',
@@ -108,6 +113,7 @@
                 const item = ITEMS[val];
                 populateSpec(idx, item);
                 renderAll(idx, item);
+                updateAggregates();
             } else {
                 i.src = '';
                 i.style.display = 'none';
@@ -139,6 +145,7 @@
             if(!val) return;
             const item = ITEMS[val];
             renderAll(idx, item);
+            updateAggregates();
         }
 
         function changeRarity(idx){
@@ -152,6 +159,7 @@
             if(val){
                 const item = ITEMS[val];
                 renderAll(idx, item);
+                updateAggregates();
             }
         }
 
@@ -303,7 +311,68 @@
                     el.textContent = JSON.stringify(SPEC_MODS, null, 2);
                 }
             }catch(e){console.warn(e)}
+            // update aggregates initially
+            updateAggregates();
         });
+
+        function gatherSelectedAssets(){
+            const assets = [];
+            // slots select ids are select-0 ... iterate all selects
+            const selects = document.querySelectorAll('select[id^="select-"]');
+            selects.forEach((s)=>{
+                const id = parseInt(s.id.split('-')[1]);
+                // exclude Arma 2 (0) and Arma 1 (2)
+                if(id===0 || id===2) return;
+                if(s.value) assets.push(s.value);
+            });
+            return assets;
+        }
+
+        function updateAggregates(){
+            // include per-slot rarity and spec when requesting aggregation
+            const raw = [];
+            const selects = document.querySelectorAll('select[id^="select-"]');
+            selects.forEach((s)=>{
+                const id = parseInt(s.id.split('-')[1]);
+                if(id===0 || id===2) return;
+                if(!s.value) return;
+                const rarity = document.getElementById('rarity-'+id).value || 'normal';
+                const spec = document.getElementById('spec-'+id).value || '';
+                raw.push({ asset: s.value, rarity: rarity, spec: spec });
+            });
+            fetch('/aggregate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ assets: raw })
+            }).then(r=>r.json()).then(data=>{
+                const el = document.getElementById('aggregate-results');
+                el.innerHTML = '';
+                if(!data) return;
+                const s = data.stats || {};
+                const r = data.requirements || {};
+                const hs = document.createElement('div');
+                hs.innerHTML = '<strong>Stats:</strong>';
+                for(const k in s){
+                    const v = s[k];
+                    const div = document.createElement('div');
+                    if(Array.isArray(v)) div.textContent = k + ': ' + v[0] + ' - ' + v[1];
+                    else div.textContent = k + ': ' + v;
+                    hs.appendChild(div);
+                }
+                const hr = document.createElement('div');
+                hr.style.marginTop = '8px';
+                hr.innerHTML = '<strong>Requirements:</strong>';
+                for(const k in r){
+                    const v = r[k];
+                    const div = document.createElement('div');
+                    if(Array.isArray(v)) div.textContent = k + ': ' + v[0] + ' - ' + v[1];
+                    else div.textContent = k + ': ' + v;
+                    hr.appendChild(div);
+                }
+                el.appendChild(hs);
+                el.appendChild(hr);
+            }).catch(err=>{ console.warn(err); });
+        }
     </script>
 </body>
 </html>

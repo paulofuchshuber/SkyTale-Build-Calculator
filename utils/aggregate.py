@@ -1,0 +1,260 @@
+def _extract_min_max(val):
+    # return tuple (min, max) or None. Preserve numeric types (int/float).
+    if val is None:
+        return None
+    if isinstance(val, (int, float)):
+        return (val, val)
+    if isinstance(val, dict):
+        # common pattern: { "min": {"min": X, "max": Y}, "max": {"min": A, "max": B} }
+        try:
+            # try nested 'min' -> 'min'
+            mn = None
+            mx = None
+            if 'min' in val:
+                m = val['min']
+                if isinstance(m, dict):
+                    # find a numeric inside
+                    for k in ('min','value'):
+                        if k in m and isinstance(m[k], (int,float)):
+                            mn = float(m[k]); break
+                    if mn is None:
+                        # try any numeric value in m
+                        for v in m.values():
+                            if isinstance(v,(int,float)):
+                                mn = float(v); break
+                elif isinstance(m,(int,float)):
+                    mn = float(m)
+            if 'max' in val:
+                M = val['max']
+                if isinstance(M, dict):
+                    for k in ('min','value','max'):
+                        if k in M and isinstance(M[k],(int,float)):
+                            mx = float(M[k]); break
+                    if mx is None:
+                        for v in M.values():
+                            if isinstance(v,(int,float)):
+                                mx = float(v); break
+                elif isinstance(M,(int,float)):
+                    mx = float(M)
+            # fallback: if we only have mn or mx, try to use available
+            if mn is None and mx is None:
+                # try dig deeper
+                for v in val.values():
+                    if isinstance(v,(int,float)):
+                        mn = mx = float(v); break
+                    if isinstance(v,dict):
+                        for w in v.values():
+                            if isinstance(w,(int,float)):
+                                mn = mx = float(w); break
+                        if mn is not None: break
+            if mn is None and mx is not None:
+                mn = float(mx)
+            if mx is None and mn is not None:
+                mx = float(mn)
+            if mn is not None and mx is not None:
+                return (mn, mx)
+        except Exception:
+            return None
+    return None
+
+
+def aggregate_by_assets(selected_items):
+    # selected_items: list of item dicts
+    # aggregate stats: sum of mins and sum of maxs per stat key
+    stats_acc = {}
+    # requirements: collect ranges for keys
+    req_keys = ['level','strength','intelligence','talent','agility']
+    req_ranges = {k: [] for k in req_keys}
+
+    for item in selected_items:
+        st = item.get('stats', {}) or {}
+        # handle paired keys like 'absorption' + 'absorption_max' or 'attackRating' + 'attackRating_max'
+        processed = set()
+        for k in list(st.keys()):
+            if k in processed:
+                continue
+            # skip keys that are *_max by themselves
+            if k.endswith('_max'):
+                continue
+            companion = k + '_max'
+            if companion in st and isinstance(st[k], (int, float)) and isinstance(st[companion], (int, float)):
+                mn = float(st[k])
+                mx = float(st[companion])
+                processed.add(companion)
+            else:
+                rng = _extract_min_max(st[k])
+                if rng is None:
+                    continue
+                mn, mx = rng
+            # accumulate as floats when necessary
+            if k not in stats_acc:
+                stats_acc[k] = [0.0, 0.0]
+            stats_acc[k][0] += float(mn)
+            stats_acc[k][1] += float(mx)
+
+        req = item.get('requirements', {}) or {}
+        for k in req_keys:
+            if k in req:
+                val = req[k]
+                if isinstance(val, dict):
+                    rng = _extract_min_max(val)
+                    if rng:
+                        req_ranges[k].append(rng)
+                elif isinstance(val, (int, float)):
+                    req_ranges[k].append((val, val))
+
+    # build stats result: if min==max show single int/float, else list
+    stats_out = {}
+    for k, (smin, smax) in stats_acc.items():
+        # don't expose keys with '_max'
+        if k.endswith('_max'):
+            continue
+        # if both are integers (no fractional part), return ints; else round absorption-like to 1 decimal
+        def is_intish(x):
+            return abs(x - int(x)) < 1e-9
+
+        if abs(smin - smax) < 1e-9:
+            # single value
+            if is_intish(smin):
+                stats_out[k] = int(smin)
+            else:
+                stats_out[k] = round(smin, 1)
+        else:
+            if is_intish(smin) and is_intish(smax):
+                stats_out[k] = [int(smin), int(smax)]
+            else:
+                stats_out[k] = [round(smin, 1), round(smax, 1)]
+
+    # build requirements result: for each key, if any ranges exist, result_min = max(mins), result_max = max(maxs)
+    req_out = {}
+    for k, ranges in req_ranges.items():
+        if not ranges:
+            continue
+        mins = [r[0] for r in ranges]
+        maxs = [r[1] for r in ranges]
+        res_min = max(mins)
+        res_max = max(maxs)
+        if abs(res_min - res_max) < 1e-9:
+            # single
+            if isinstance(res_min, float) and abs(res_min - int(res_min)) > 1e-9:
+                req_out[k] = round(res_min, 1)
+            else:
+                req_out[k] = int(res_min)
+        else:
+            # if both ints, return ints
+            if all(isinstance(x, (int, float)) and abs(x - int(x)) < 1e-9 for x in (res_min, res_max)):
+                req_out[k] = [int(res_min), int(res_max)]
+            else:
+                req_out[k] = [round(res_min, 1), round(res_max, 1)]
+
+    return {'stats': stats_out, 'requirements': req_out}
+
+
+def apply_rarity_and_spec(item, rarity='normal', spec=None):
+    """Return a modified deep-copy of `item` applying rarity bonuses to stats
+    and spec percentage modifiers to requirements. Does not mutate input.
+    """
+    import copy, math
+    itm = copy.deepcopy(item)
+
+    # rarity bonuses (mirror frontend)
+    sub = (itm.get('subCategory') or '').lower()
+    isWeapon = sub in ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas']
+    isBootsOrGloves = sub in ['botas','luvas']
+    isArmorOrRobe = sub in ['armaduras','roupoes']
+    isShield = sub in ['escudos','orbitais']
+    isBracelet = sub in ['braceletes']
+
+    atkPowerBonus=0; atkRatingBonus=0; defBonus=0; absBonus=0
+    if rarity == 'rare':
+        if isWeapon: atkPowerBonus=4; atkRatingBonus=10
+        if isBootsOrGloves: defBonus=10; absBonus=1
+        if isArmorOrRobe: defBonus=30; absBonus=1
+        if isShield: absBonus=1
+        if isBracelet: atkRatingBonus=10
+    elif rarity == 'epic':
+        if isWeapon: atkPowerBonus=8; atkRatingBonus=20
+        if isBootsOrGloves: defBonus=20; absBonus=2
+        if isArmorOrRobe: defBonus=60; absBonus=2
+        if isShield: absBonus=2
+        if isBracelet: atkRatingBonus=20
+    elif rarity == 'legendary':
+        if isWeapon: atkPowerBonus=12; atkRatingBonus=30
+        if isBootsOrGloves: defBonus=30; absBonus=3
+        if isArmorOrRobe: defBonus=90; absBonus=3
+        if isShield: absBonus=3
+        if isBracelet: atkRatingBonus=30
+
+    # helper to add bonus to a numeric range (min,max)
+    def add_bonus_to_range(src, add):
+        rng = _extract_min_max(src)
+        if rng is None:
+            return src
+        mn, mx = rng
+        return {'min': {'min': float(mn + add)}, 'max': {'min': float(mx + add)}}
+
+    stats = itm.get('stats') or {}
+    # defense
+    if defBonus and 'defense' in stats:
+        stats['defense'] = add_bonus_to_range(stats['defense'], defBonus)
+    # absorption
+    if absBonus and ('absorption' in stats or 'absorption_max' in stats):
+        # try to parse companion numeric pattern first
+        if isinstance(stats.get('absorption'), (int,float)) or isinstance(stats.get('absorption_max'), (int,float)):
+            aMin = float(stats.get('absorption') or 0)
+            aMax = float(stats.get('absorption_max') or aMin)
+            stats['absorption'] = {'min': {'min': float(aMin + absBonus)}, 'max': {'min': float(aMax + absBonus)}}
+            if 'absorption_max' in stats:
+                del stats['absorption_max']
+        else:
+            stats['absorption'] = add_bonus_to_range(stats.get('absorption'), absBonus)
+    # attackPower
+    if atkPowerBonus and 'attackPower' in stats:
+        stats['attackPower'] = add_bonus_to_range(stats['attackPower'], atkPowerBonus)
+    # attackRating
+    if atkRatingBonus and 'attackRating' in stats:
+        stats['attackRating'] = add_bonus_to_range(stats['attackRating'], atkRatingBonus)
+
+    itm['stats'] = stats
+
+    # apply spec modifiers to requirements
+    SPEC_MODS = {
+        'Mechanician': {'strength': {'min':0.05, 'max':0.10}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.25, 'max':-0.15}},
+        'Fighter':     {'strength': {'min':0.10, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.15}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Pikeman':     {'strength': {'min':0.10, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.15}, 'talent': None, 'agility': {'min':-0.25, 'max':-0.15}},
+        'Archer':      {'strength': {'min':-0.25, 'max':-0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':0.15, 'max':0.25}},
+        'Knight':      {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.15, 'max':-0.10}, 'talent': {'min':0.05, 'max':0.10}, 'agility': {'min':-0.25, 'max':-0.15}},
+        'Atalanta':    {'strength': {'min':-0.20, 'max':-0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':0.15, 'max':0.25}},
+        'Priestess':   {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.20}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Mage':        {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.25}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Shaman':      {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.25}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Assassin':    {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Guerriera':   {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}}
+    }
+
+    req = itm.get('requirements') or {}
+    if spec and spec in SPEC_MODS:
+        mods = SPEC_MODS[spec]
+        for k in ['level','strength','intelligence','talent','agility']:
+            if k not in req:
+                continue
+            v = req[k]
+            # treat level as fixed
+            if k == 'level':
+                continue
+            if mods.get(k) is None:
+                # no modifier for this key
+                continue
+            pmin = mods[k]['min']; pmax = mods[k]['max']
+            # extract numeric range
+            rng = _extract_min_max(v)
+            if rng is None:
+                continue
+            mn, mx = rng
+            low = math.ceil(mn * (1 + pmin))
+            high = math.ceil(mx * (1 + pmax))
+            # ensure ascending
+            req[k] = {'min': {'min': float(min(low, high))}, 'max': {'min': float(max(low, high))}}
+
+    itm['requirements'] = req
+    return itm
