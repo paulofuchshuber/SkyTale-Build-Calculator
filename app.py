@@ -55,36 +55,8 @@ def index():
     # Calculate max width/height per slot from the actual image files
     slot_sizes = {}
     for slot in slots:
-        max_w = 0
-        max_h = 0
-        # iterate through all items in grouped categories
-        for cat, items in slot_items[slot['name']].items():
-            for item in items:
-                try:
-                    asset = item.get('assets', {}).get('assetFile') if isinstance(item, dict) else None
-                    if not asset:
-                        continue
-                    # asset paths in JSON are like 'assets/items/itda102.bmp'
-                    rel = asset
-                    if rel.startswith('assets/'):
-                        rel = rel[len('assets/'):]
-                    if rel.startswith('/'):
-                        rel = rel.lstrip('/')
-                    img_path = os.path.join(app.static_folder, rel)
-                    if not os.path.isfile(img_path):
-                        continue
-                    with Image.open(img_path) as im:
-                        w, h = im.size
-                        if w > max_w:
-                            max_w = w
-                        if h > max_h:
-                            max_h = h
-                except Exception:
-                    continue
-        if max_w == 0:
-            max_w = 100
-        if max_h == 0:
-            max_h = 100
+        max_w = 66
+        max_h = 100
         slot_sizes[slot['name']] = {'w': max_w, 'h': max_h}
 
     return render_template('index.html', slots=slots, slot_items=slot_items, slot_sizes=slot_sizes, items_map=items_map)

@@ -147,6 +147,14 @@ def aggregate_by_assets(selected_items):
             else:
                 req_out[k] = [round(res_min, 1), round(res_max, 1)]
 
+    ordered_keys = ['defense', 'absorption', 'block', 'hp', 'stamina', 'mana']
+    ordered_stats = {}
+    for k in ordered_keys:
+        if k in stats_out:
+            ordered_stats[k] = stats_out[k]
+        else:
+            ordered_stats[k] = '-'
+
     # Ensure ordered requirements and fill missing keys with '-'
     ordered_keys = ['strength', 'intelligence', 'talent', 'agility']
     ordered_req = {}
@@ -159,7 +167,7 @@ def aggregate_by_assets(selected_items):
     if 'level' in req_out:
         ordered_req['level'] = req_out['level']
 
-    return {'stats': stats_out, 'requirements': ordered_req}
+    return {'stats': ordered_stats, 'requirements': ordered_req}
 
 
 def apply_rarity_and_spec(item, rarity='normal', spec=None):
