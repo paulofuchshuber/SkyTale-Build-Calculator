@@ -1,3 +1,2 @@
-- Poder de atack nao esta correto (min, max) ~ (min, max)
 - Aging no item
 - Mix no item

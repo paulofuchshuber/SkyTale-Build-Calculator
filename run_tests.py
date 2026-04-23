@@ -1,13 +1,11 @@
 from tests import test_aggregate
-import traceback
+import traceback, inspect
 
-tests = [
-    test_aggregate.test_range_plus_range_strength,
-    test_aggregate.test_single_plus_range_talent_inside,
-    test_aggregate.test_single_plus_range_talent_above,
-    test_aggregate.test_single_plus_range_talent_below,
-    test_aggregate.test_stats_sum_min_max,
-]
+# collect all callables in test_aggregate starting with 'test_'
+tests = []
+for name, obj in inspect.getmembers(test_aggregate):
+    if name.startswith('test_') and inspect.isfunction(obj):
+        tests.append(obj)
 
 failed = []
 for t in tests:

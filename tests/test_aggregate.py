@@ -80,3 +80,103 @@ def test_example_armor_boots_rarity_spec():
     assert out['requirements']['strength'] == [120, 136]
     # agility should come from boots (spec Archer doesn't reduce agility here)
     assert out['requirements']['agility'] == [104, 113]
+
+
+def make_item_stats(def_val, abs_val):
+    return {
+        'subCategory': 'armaduras',
+        'stats': {
+            'defense': {'min': {'min': def_val}, 'max': {'min': def_val}},
+            'absorption': abs_val,
+            'absorption_max': abs_val
+        },
+        'requirements': {}
+    }
+
+def test_armor_aging_examples():
+    base = make_item_stats(120, 5.3)
+    a5 = apply_rarity_and_spec(base, rarity='normal', spec=None, aging=5)
+    out5 = aggregate_by_assets([a5])
+    assert out5['stats']['defense'] == 151
+    assert out5['stats']['absorption'] == 7.8
+
+    a9 = apply_rarity_and_spec(base, rarity='normal', spec=None, aging=9)
+    out9 = aggregate_by_assets([a9])
+    assert out9['stats']['defense'] == 181
+    assert out9['stats']['absorption'] == 9.8
+
+    a12 = apply_rarity_and_spec(base, rarity='normal', spec=None, aging=12)
+    out12 = aggregate_by_assets([a12])
+    assert out12['stats']['defense'] == 208
+    assert out12['stats']['absorption'] == 12.8
+
+    a15 = apply_rarity_and_spec(base, rarity='normal', spec=None, aging=15)
+    out15 = aggregate_by_assets([a15])
+    assert out15['stats']['defense'] == 239
+    assert out15['stats']['absorption'] == 15.8
+
+
+def make_shield(block_val, abs_val):
+    return {
+        'subCategory': 'escudos',
+        'stats': {
+            'block': {'min': {'min': block_val}, 'max': {'min': block_val}},
+            'absorption': abs_val,
+            'absorption_max': abs_val
+        },
+        'requirements': {}
+    }
+
+def make_orbital(def_val, abs_val):
+    return {
+        'subCategory': 'orbitais',
+        'stats': {
+            'defense': {'min': {'min': def_val}, 'max': {'min': def_val}},
+            'absorption': abs_val,
+            'absorption_max': abs_val
+        },
+        'requirements': {}
+    }
+
+def test_shield_and_orbital_aging_examples():
+    shield = make_shield(20, 9.4)
+    s5 = apply_rarity_and_spec(shield, aging=5)
+    out5 = aggregate_by_assets([s5])
+    assert out5['stats']['block'] == 22
+    assert out5['stats']['absorption'] == 10.4
+
+    s7 = apply_rarity_and_spec(shield, aging=7)
+    out7 = aggregate_by_assets([s7])
+    assert out7['stats']['block'] == 23
+    assert out7['stats']['absorption'] == 10.8
+
+    s12 = apply_rarity_and_spec(shield, aging=12)
+    out12 = aggregate_by_assets([s12])
+    assert out12['stats']['block'] == 26
+    assert out12['stats']['absorption'] == 12.4
+
+    s15 = apply_rarity_and_spec(shield, aging=15)
+    out15 = aggregate_by_assets([s15])
+    assert out15['stats']['block'] == 27
+    assert out15['stats']['absorption'] == 13.6
+
+    orb = make_orbital(132, 5.7)
+    o5 = apply_rarity_and_spec(orb, aging=5)
+    o5r = aggregate_by_assets([o5])
+    assert o5r['stats']['defense'] == 210
+    assert o5r['stats']['absorption'] == 8.2
+
+    o7 = apply_rarity_and_spec(orb, aging=7)
+    o7r = aggregate_by_assets([o7])
+    assert o7r['stats']['defense'] == 254
+    assert o7r['stats']['absorption'] == 9.2
+
+    o12 = apply_rarity_and_spec(orb, aging=12)
+    o12r = aggregate_by_assets([o12])
+    assert o12r['stats']['defense'] == 405
+    assert o12r['stats']['absorption'] == 13.2
+
+    o15 = apply_rarity_and_spec(orb, aging=15)
+    o15r = aggregate_by_assets([o15])
+    assert o15r['stats']['defense'] == 537
+    assert o15r['stats']['absorption'] == 16.2

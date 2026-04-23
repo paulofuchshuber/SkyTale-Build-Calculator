@@ -61,6 +61,15 @@
                 <option value="">— selecione spec —</option>
             </select>
 
+            {% if slot.name in ['Armadura', 'Escudo'] %}
+            <label style="display:block;margin-top:6px;color:white;">Aging:</label>
+            <select id="aging-{{ loop.index0 }}" onchange="onAgingChange({{ loop.index0 }})">
+                {% for i in range(0,18) %}
+                <option value="{{ i }}">+{{ i }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+
             <div id="info-{{ loop.index0 }}" style="width:100%;margin-top:8px;font-size:12px;color:#ddd;">
                 <div><strong>Stats:</strong><div id="stats-{{ loop.index0 }}"></div></div>
                 <div style="margin-top:6px;"><strong>Requirements:</strong><div id="reqs-{{ loop.index0 }}"></div></div>
@@ -172,17 +181,28 @@
             }
         }
 
+        function onAgingChange(idx){
+            const select = document.getElementById('select-'+idx);
+            if(!select || !select.value) return;
+            const item = ITEMS[select.value];
+            if(!item) return;
+            renderAll(idx, item);
+            // renderAll already calls updateAggregates
+        }
+
         function renderAll(idx, item){
             if(!item) return;
             const rarity = document.getElementById('rarity-'+idx).value || 'normal';
             const spec = document.getElementById('spec-'+idx).value || '';
             renderStats(idx, item, rarity);
             renderReqs(idx, item, spec);
+            // ensure aggregates reflect any changes (aging, rarity, spec)
+            updateAggregates();
         }
 
         // Apply rarity bonuses to a shallow copy of stats and return a simple key->value object for display
         function renderStats(idx, item, rarity){
-            const sub = item.subCategory || '';
+            const sub = item._category || item.subCategory || '';
             const isWeapon = ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas'].includes(sub);
             const isBootsOrGloves = ['botas','luvas'].includes(sub);
             const isArmorOrRobe = ['armaduras','roupoes'].includes(sub);
@@ -202,12 +222,31 @@
                     }
                     if (k === 'absorption_max') continue; 
                     if(k === 'attackRating'){
-                        const aMin = Number(item.stats['attackRating'] || 0);
-                        const aMax = Number(item.stats['attackRating_max'] || aMin);
-                        out['attackRating'] = aMin + ' - ' + aMax;
+                        // Normalize attackRating as either single number or range
+                        const aMin = item.stats['attackRating'];
+                        const aMax = item.stats['attackRating_max'];
+                        if(aMin !== undefined && aMax !== undefined){
+                            out['attackRating'] = String(aMin) + ' - ' + String(aMax);
+                        } else if(aMin !== undefined){
+                            out['attackRating'] = String(aMin);
+                        }
                         continue;
                     }
                     if (k === 'attackRating_max') continue;
+                    if(k === 'attackPower' && v && v.min && v.min.min!==undefined){
+                        // attackPower may contain alternative min/max values
+                        const min1 = v.min.min;
+                        const min2 = (v.min.max!==undefined ? v.min.max : null);
+                        const max1 = (v.max && v.max.min!==undefined ? v.max.min : null);
+                        const max2 = (v.max && v.max.max!==undefined ? v.max.max : null);
+                        // format: "min1(min2) - max1(max2)" if alternatives exist
+                        let left = String(min1);
+                        if(min2!==null && min2!==min1) left += '('+String(min2)+')';
+                        let right = (max1!==null ? String(max1) : '0');
+                        if(max2!==null && max2!==max1) right += '('+String(max2)+')';
+                        out['attackPower'] = left + ' - ' + right;
+                        continue;
+                    }
                     if(typeof v === 'level') out[k] = v;
                     else if(v && v.min && v.min.min!==undefined) out[k] = v.min.min + ' - ' + (v.max && v.max.min ? v.max.min : v.min.max || v.min.min);
                     else out[k] = JSON.stringify(v);
@@ -238,14 +277,14 @@
 
             // apply to flattened out
             if(atkPowerBonus && out.attackPower){
-                // attackPower might be a range string; try to parse and add
-                const parts = out.attackPower.toString().split('-').map(p=>parseInt(p));
-                if(parts.length===2 && !isNaN(parts[0])){
-                    out.attackPower = (parts[0]+atkPowerBonus) + ' - ' + (parts[1]+atkPowerBonus);
-                }
+                // Add bonus to all numeric parts inside attackPower string, preserving parentheses
+                // e.g. "14(16) - 24(27)" -> add bonus to each number
+                out.attackPower = out.attackPower.replace(/(\d+)/g, (m)=>String(Number(m) + atkPowerBonus));
             }
-            if(atkRatingBonus && out.attackRating && !isNaN(Number(out.attackRating))){
-                out.attackRating = Number(out.attackRating) + atkRatingBonus;
+            if(atkRatingBonus && out.attackRating){
+                // attackRating can be a single number or a range "a - b"
+                // Apply bonus to all numbers found
+                out.attackRating = String(out.attackRating).replace(/(\d+)/g, (m)=>String(Number(m) + atkRatingBonus));
             }
             if(defBonus && out.defense){
                 // defense stored as range string
@@ -263,6 +302,133 @@
                     out.absorption = (Number(out.absorption) + absBonus).toFixed(1);
                 }
             }
+
+            // Apply aging modifications to defense/absorption/block for Armadura/Escudo slots
+            try{
+                const agingEl = document.getElementById('aging-'+idx);
+                const aging = agingEl ? parseInt(agingEl.value || 0) : 0;
+                const sub = item._category || item.subCategory || '';
+                const isArmorOrRobe = ['armaduras','roupoes'].includes(sub);
+                const isShield = ['escudos'].includes(sub);
+                const isOrbital = ['orbitais'].includes(sub);
+                if(aging > 0){
+                    if(isArmorOrRobe && out.defense){
+                        // parse defense range or single
+                        const parts = out.defense.toString().split('-').map(p=>parseInt(p));
+                        if(parts.length===2 && !isNaN(parts[0])){
+                            let mn = parts[0];
+                            let mx = parts[1];
+                            for(let lvl=0; lvl<aging; lvl++){
+                                mn = Math.floor(mn * 1.05);
+                                mx = Math.floor(mx * 1.05);
+                            }
+                            out.defense = mn + ' - ' + mx;
+                        } else if(!isNaN(Number(out.defense))){
+                            let v = parseInt(out.defense);
+                            for(let lvl=0; lvl<aging; lvl++) v = Math.floor(v * 1.05);
+                            out.defense = String(v);
+                        }
+                    }
+                    if(isArmorOrRobe && out.absorption){
+                        // absorption like '5.3 - 6.1' or single
+                        const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
+                        if(parts.length===2 && !isNaN(parts[0])){
+                            let mn = parts[0];
+                            let mx = parts[1];
+                            for(let lvl=1; lvl<=aging; lvl++){
+                                const add = (lvl<=9 ? 0.5 : 1.0);
+                                mn = Math.round((mn + add) * 10) / 10;
+                                mx = Math.round((mx + add) * 10) / 10;
+                            }
+                            out.absorption = mn.toFixed(1) + ' - ' + mx.toFixed(1);
+                        } else if(!isNaN(Number(out.absorption))){
+                            let v = parseFloat(out.absorption);
+                            for(let lvl=1; lvl<=aging; lvl++){
+                                const add = (lvl<=9 ? 0.5 : 1.0);
+                                v = Math.round((v + add) * 10) / 10;
+                            }
+                            out.absorption = v.toFixed(1);
+                        }
+                    }
+                    if(isShield){
+                        if(out.block){
+                            const parts = out.block.toString().split('-').map(p=>parseFloat(p));
+                            if(parts.length===2 && !isNaN(parts[0])){
+                                let mn = parts[0];
+                                let mx = parts[1];
+                                for(let lvl=0; lvl<aging; lvl++){
+                                    mn = mn + 0.5;
+                                    mx = mx + 0.5;
+                                }
+                                out.block = Math.floor(mn) + ' - ' + Math.floor(mx);
+                            } else if(!isNaN(Number(out.block))){
+                                let v = parseFloat(out.block);
+                                for(let lvl=0; lvl<aging; lvl++) v = v + 0.5;
+                                out.block = String(Math.floor(v));
+                            }
+                        }
+                        if(out.absorption){
+                            const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
+                            if(parts.length===2 && !isNaN(parts[0])){
+                                let mn = parts[0];
+                                let mx = parts[1];
+                                for(let lvl=1; lvl<=aging; lvl++){
+                                    const add = (lvl<=9 ? 0.2 : 0.4);
+                                    mn = Math.round((mn + add) * 10) / 10;
+                                    mx = Math.round((mx + add) * 10) / 10;
+                                }
+                                out.absorption = mn.toFixed(1) + ' - ' + mx.toFixed(1);
+                            } else if(!isNaN(Number(out.absorption))){
+                                let v = parseFloat(out.absorption);
+                                for(let lvl=1; lvl<=aging; lvl++){
+                                    const add = (lvl<=9 ? 0.2 : 0.4);
+                                    v = Math.round((v + add) * 10) / 10;
+                                }
+                                out.absorption = v.toFixed(1);
+                            }
+                        }
+                    }
+                    if(isOrbital){
+                        if(out.defense){
+                            // apply +10% per level iteratively
+                            const parts = out.defense.toString().split('-').map(p=>parseInt(p));
+                            if(parts.length===2 && !isNaN(parts[0])){
+                                let mn = parts[0];
+                                let mx = parts[1];
+                                for(let lvl=0; lvl<aging; lvl++){
+                                    mn = Math.floor(mn * 1.10);
+                                    mx = Math.floor(mx * 1.10);
+                                }
+                                out.defense = mn + ' - ' + mx;
+                            } else if(!isNaN(Number(out.defense))){
+                                let v = parseInt(out.defense);
+                                for(let lvl=0; lvl<aging; lvl++) v = Math.floor(v * 1.10);
+                                out.defense = String(v);
+                            }
+                        }
+                        if(out.absorption){
+                            const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
+                            if(parts.length===2 && !isNaN(parts[0])){
+                                let mn = parts[0];
+                                let mx = parts[1];
+                                for(let lvl=1; lvl<=aging; lvl++){
+                                    const add = (lvl<=9 ? 0.5 : 1.0);
+                                    mn = Math.round((mn + add) * 10) / 10;
+                                    mx = Math.round((mx + add) * 10) / 10;
+                                }
+                                out.absorption = mn.toFixed(1) + ' - ' + mx.toFixed(1);
+                            } else if(!isNaN(Number(out.absorption))){
+                                let v = parseFloat(out.absorption);
+                                for(let lvl=1; lvl<=aging; lvl++){
+                                    const add = (lvl<=9 ? 0.5 : 1.0);
+                                    v = Math.round((v + add) * 10) / 10;
+                                }
+                                out.absorption = v.toFixed(1);
+                            }
+                        }
+                    }
+                }
+            } catch(e){ console.warn('Aging apply error', e); }
 
             // render with explicit ordering for important keys
             const ordered_stats_keys = ['defense','absorption','block','hp','stamina','mana'];
@@ -362,7 +528,10 @@
                 if(!s.value) return;
                 const rarity = document.getElementById('rarity-'+id).value || 'normal';
                 const spec = document.getElementById('spec-'+id).value || '';
-                raw.push({ asset: s.value, rarity: rarity, spec: spec });
+                // include aging if present
+                const agingEl = document.getElementById('aging-'+id);
+                const aging = agingEl ? parseInt(agingEl.value || 0) : 0;
+                raw.push({ asset: s.value, rarity: rarity, spec: spec, aging: aging });
             });
             fetch('/aggregate', {
                 method: 'POST',
@@ -376,7 +545,7 @@
                 const r = data.requirements || {};
                 const hs = document.createElement('div');
                 hs.innerHTML = '<strong>Stats:</strong>';
-                const ordered_stats_keys = ['defense','absorption','block','hp','stamina','mana'];
+                const ordered_stats_keys = ['defense','absorption','block','hp','stamina','mana','attackPower','attackRating','critical'];
                 const statOrder = [];
                 ordered_stats_keys.forEach(k=>{ if(s.hasOwnProperty(k)) statOrder.push(k); });
                 Object.keys(s).forEach(k=>{ if(!statOrder.includes(k)) statOrder.push(k); });

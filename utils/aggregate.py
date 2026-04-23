@@ -147,7 +147,7 @@ def aggregate_by_assets(selected_items):
             else:
                 req_out[k] = [round(res_min, 1), round(res_max, 1)]
 
-    ordered_keys = ['defense', 'absorption', 'block', 'hp', 'stamina', 'mana']
+    ordered_keys = ['defense', 'absorption', 'block', 'hp', 'stamina', 'mana', 'attackPower', 'attackRating', 'critical']
     ordered_stats = {}
     for k in ordered_keys:
         if k in stats_out:
@@ -170,7 +170,7 @@ def aggregate_by_assets(selected_items):
     return {'stats': ordered_stats, 'requirements': ordered_req}
 
 
-def apply_rarity_and_spec(item, rarity='normal', spec=None):
+def apply_rarity_and_spec(item, rarity='normal', spec=None, aging=0):
     """Return a modified deep-copy of `item` applying rarity bonuses to stats
     and spec percentage modifiers to requirements. Does not mutate input.
     """
@@ -178,12 +178,15 @@ def apply_rarity_and_spec(item, rarity='normal', spec=None):
     itm = copy.deepcopy(item)
 
     # rarity bonuses (mirror frontend)
-    sub = (itm.get('subCategory') or '').lower()
-    isWeapon = sub in ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas']
-    isBootsOrGloves = sub in ['botas','luvas']
-    isArmorOrRobe = sub in ['armaduras','roupoes']
-    isShield = sub in ['escudos','orbitais']
-    isBracelet = sub in ['braceletes']
+    # Prefer top-level category annotation `_category` when available; fallback to `subCategory`
+    cat = (itm.get('_category') or itm.get('subCategory') or '').lower()
+    isWeapon = cat in ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas']
+    isBootsOrGloves = cat in ['botas','luvas']
+    isArmorOrRobe = cat in ['armaduras','roupoes']
+    # shields and orbitals are distinct categories
+    isShield = cat in ['escudos']
+    isOrbital = cat in ['orbitais']
+    isBracelet = cat in ['braceletes']
 
     atkPowerBonus=0; atkRatingBonus=0; defBonus=0; absBonus=0
     if rarity == 'rare':
@@ -237,44 +240,93 @@ def apply_rarity_and_spec(item, rarity='normal', spec=None):
 
     itm['stats'] = stats
 
-    # apply spec modifiers to requirements
-    SPEC_MODS = {
-        'Mechanician': {'strength': {'min':0.05, 'max':0.10}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.25, 'max':-0.15}},
-        'Fighter':     {'strength': {'min':0.10, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.15}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}},
-        'Pikeman':     {'strength': {'min':0.10, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.15}, 'talent': None, 'agility': {'min':-0.25, 'max':-0.15}},
-        'Archer':      {'strength': {'min':-0.25, 'max':-0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':0.15, 'max':0.25}},
-        'Knight':      {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.15, 'max':-0.10}, 'talent': {'min':0.05, 'max':0.10}, 'agility': {'min':-0.25, 'max':-0.15}},
-        'Atalanta':    {'strength': {'min':-0.20, 'max':-0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':0.15, 'max':0.25}},
-        'Priestess':   {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.20}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
-        'Mage':        {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.25}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
-        'Shaman':      {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.25}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
-        'Assassin':    {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}},
-        'Guerriera':   {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}}
-    }
+    # Leave requirements unchanged here. Frontend handles spec-based requirement display.
+    itm['requirements'] = itm.get('requirements') or {}
+    # Apply aging to stats if requested
+    try:
+        aging_levels = int(aging or 0)
+    except Exception:
+        aging_levels = 0
 
-    req = itm.get('requirements') or {}
-    if spec and spec in SPEC_MODS:
-        mods = SPEC_MODS[spec]
-        for k in ['level','strength','intelligence','talent','agility']:
-            if k not in req:
-                continue
-            v = req[k]
-            # treat level as fixed
-            if k == 'level':
-                continue
-            if mods.get(k) is None:
-                # no modifier for this key
-                continue
-            pmin = mods[k]['min']; pmax = mods[k]['max']
-            # extract numeric range
-            rng = _extract_min_max(v)
+    if aging_levels > 0:
+        import math
+        stats = itm.get('stats') or {}
+        # armor/robe: defense +5% per level (floor each step), absorption +0.5 per lvl 1-9, +1.0 per lvl 10+
+        # For aging rules prefer annotated category if present
+        sub = (itm.get('_category') or itm.get('subCategory') or '').lower()
+        isArmorOrRobe = sub in ['armaduras', 'roupoes']
+        isShield = sub in ['escudos']
+        isOrbital = sub in ['orbitais']
+
+        def apply_range_floor(src, levels, pct_per_level=0.05):
+            rng = _extract_min_max(src)
             if rng is None:
-                continue
+                return src
             mn, mx = rng
-            low = math.ceil(mn * (1 + pmin))
-            high = math.ceil(mx * (1 + pmax))
-            # ensure ascending
-            req[k] = {'min': {'min': float(min(low, high))}, 'max': {'min': float(max(low, high))}}
+            for lvl in range(levels):
+                mn = math.floor(mn * (1 + pct_per_level))
+                mx = math.floor(mx * (1 + pct_per_level))
+            return {'min': {'min': float(mn)}, 'max': {'min': float(mx)}}
 
-    itm['requirements'] = req
+        def apply_absorption(src, levels, per_level_small=0.5, per_level_big=1.0):
+            rng = _extract_min_max(src)
+            if rng is None:
+                return src
+            mn, mx = rng
+            for lvl in range(1, levels+1):
+                add = per_level_small if lvl <= 9 else per_level_big
+                mn += add
+                mx += add
+                mn = round(mn, 1)
+                mx = round(mx, 1)
+            return {'min': {'min': float(mn)}, 'max': {'min': float(mx)}}
+
+        if isArmorOrRobe:
+            if 'defense' in stats:
+                stats['defense'] = apply_range_floor(stats['defense'], aging_levels, pct_per_level=0.05)
+            # handle absorption numeric companion
+            if 'absorption' in stats or 'absorption_max' in stats:
+                if isinstance(stats.get('absorption'), (int, float)) or isinstance(stats.get('absorption_max'), (int, float)):
+                    aMin = float(stats.get('absorption') or 0)
+                    aMax = float(stats.get('absorption_max') or aMin)
+                    stats['absorption'] = {'min': {'min': aMin}, 'max': {'min': aMax}}
+                    if 'absorption_max' in stats:
+                        del stats['absorption_max']
+                stats['absorption'] = apply_absorption(stats.get('absorption'), aging_levels, per_level_small=0.5, per_level_big=1.0)
+
+        if isShield:
+            # shields: block +0.5 per level, absorption +0.2 per level (1-9) then +0.4 (10+)
+            if 'block' in stats:
+                rng = _extract_min_max(stats['block'])
+                if rng is not None:
+                    mn, mx = rng
+                    for lvl in range(aging_levels):
+                        mn = mn + 0.5
+                        mx = mx + 0.5
+                    # final block should be floored to integer per validated examples
+                    stats['block'] = {'min': {'min': float(math.floor(mn))}, 'max': {'min': float(math.floor(mx))}}
+            if 'absorption' in stats or 'absorption_max' in stats:
+                if isinstance(stats.get('absorption'), (int, float)) or isinstance(stats.get('absorption_max'), (int, float)):
+                    aMin = float(stats.get('absorption') or 0)
+                    aMax = float(stats.get('absorption_max') or aMin)
+                    stats['absorption'] = {'min': {'min': aMin}, 'max': {'min': aMax}}
+                    if 'absorption_max' in stats:
+                        del stats['absorption_max']
+                stats['absorption'] = apply_absorption(stats.get('absorption'), aging_levels, per_level_small=0.2, per_level_big=0.4)
+
+        if isOrbital:
+            # orbitals: defense +10% per level, absorption +0.5 per level (1-9) then +1.0 (10+)
+            if 'defense' in stats:
+                stats['defense'] = apply_range_floor(stats['defense'], aging_levels, pct_per_level=0.10)
+            if 'absorption' in stats or 'absorption_max' in stats:
+                if isinstance(stats.get('absorption'), (int, float)) or isinstance(stats.get('absorption_max'), (int, float)):
+                    aMin = float(stats.get('absorption') or 0)
+                    aMax = float(stats.get('absorption_max') or aMin)
+                    stats['absorption'] = {'min': {'min': aMin}, 'max': {'min': aMax}}
+                    if 'absorption_max' in stats:
+                        del stats['absorption_max']
+                stats['absorption'] = apply_absorption(stats.get('absorption'), aging_levels, per_level_small=0.5, per_level_big=1.0)
+
+        itm['stats'] = stats
+
     return itm

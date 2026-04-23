@@ -21,7 +21,7 @@ def index():
     slots = [
         {'name': 'Arma 2', 'categories': ['machados', 'garras', 'varinhas', 'foices', 'lancas', 'arcos', 'martelos', 'espadas']},
         {'name': 'Armadura', 'categories': ['armaduras', 'roupoes']},
-        {'name': 'Arma 1', 'categories': ['machados', 'garras', 'varinhas', 'foices', 'lancas', 'arcos', 'martelos', 'espadas']},
+        # 'Arma 1' removed per request
         {'name': 'Escudo', 'categories': ['escudos', 'orbitais']},
         {'name': 'Bracelete', 'categories': ['braceletes']},
         {'name': 'Luvas', 'categories': ['luvas']},
@@ -48,6 +48,9 @@ def index():
             try:
                 asset = item.get('assets', {}).get('assetFile') if isinstance(item, dict) else None
                 if asset:
+                    # annotate item with its top-level category so frontend/backend can rely on it
+                    if isinstance(item, dict):
+                        item['_category'] = cat
                     items_map[asset] = item
             except Exception:
                 continue
@@ -75,6 +78,8 @@ def aggregate():
             for item in items:
                 asset = item.get('assets', {}).get('assetFile') if isinstance(item, dict) else None
                 if asset:
+                    if isinstance(item, dict):
+                        item['_category'] = cat
                     items_map[asset] = item
 
     # assets can be list of assetFile strings or objects {asset, rarity, spec}
@@ -90,7 +95,12 @@ def aggregate():
             base = items_map[asset]
             rarity = a.get('rarity', 'normal')
             spec = a.get('spec') or None
-            selected.append(apply_rarity_and_spec(base, rarity=rarity, spec=spec))
+            aging = a.get('aging', 0) or 0
+            try:
+                aging = int(aging)
+            except Exception:
+                aging = 0
+            selected.append(apply_rarity_and_spec(base, rarity=rarity, spec=spec, aging=aging))
 
     result = aggregate_by_assets(selected)
     return jsonify(result)
