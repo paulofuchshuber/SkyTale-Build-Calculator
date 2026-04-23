@@ -77,9 +77,10 @@ def test_example_armor_boots_rarity_spec():
     # defense: 200-230 + (125-135 +10 from rare boots) => 335 - 375
     assert out['stats']['defense'] == [335, 375]
     # requirements: strength should be dominated by armor (120-136)
-    assert out['requirements']['strength'] == [120, 136]
-    # agility should come from boots (spec Archer doesn't reduce agility here)
-    assert out['requirements']['agility'] == [104, 113]
+    # requirements: strength after Archer spec applied to armor
+    assert out['requirements']['strength'] == [90, 116]
+    # agility should come from boots with Archer spec (increased)
+    assert out['requirements']['agility'] == [120, 142]
 
 
 def make_item_stats(def_val, abs_val):
@@ -180,3 +181,29 @@ def test_shield_and_orbital_aging_examples():
     o15r = aggregate_by_assets([o15])
     assert o15r['stats']['defense'] == 537
     assert o15r['stats']['absorption'] == 16.2
+
+
+def test_final_requirements_strength_range():
+    # Scenario from user: three items with overlapping strength ranges
+    spear = {
+        'subCategory': 'lancas',
+        'stats': {},
+        'requirements': {'level': 100, 'strength': {'min': {'min':60}, 'max': {'min':68}}, 'talent': 90, 'agility': {'min': {'min':161}, 'max': {'min':175}}}
+    }
+    armor = {
+        'subCategory': 'armaduras',
+        'stats': {},
+        'requirements': {'level': 43, 'strength': {'min': {'min':82}, 'max': {'min':87}}, 'talent': 62}
+    }
+    shield = {
+        'subCategory': 'escudos',
+        'stats': {},
+        'requirements': {'level': 55, 'strength': {'min': {'min':84}, 'max': {'min':90}}, 'talent': 56}
+    }
+
+    a1 = apply_rarity_and_spec(spear, rarity='legendary', spec='Archer')
+    a2 = apply_rarity_and_spec(armor, rarity='legendary', spec='Atalanta', aging=15)
+    a3 = apply_rarity_and_spec(shield, rarity='legendary', spec='Atalanta', aging=15)
+    out = aggregate_by_assets([a1, a2, a3])
+    # strength should be the dominating range after spec mods -> [68,77]
+    assert out['requirements']['strength'] == [68, 77]

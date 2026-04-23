@@ -242,6 +242,43 @@ def apply_rarity_and_spec(item, rarity='normal', spec=None, aging=0):
 
     # Leave requirements unchanged here. Frontend handles spec-based requirement display.
     itm['requirements'] = itm.get('requirements') or {}
+    # apply spec modifiers to requirements (mirror frontend behavior)
+    SPEC_MODS = {
+        'Mechanician': {'strength': {'min':0.05, 'max':0.10}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.25, 'max':-0.15}},
+        'Fighter':     {'strength': {'min':0.10, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.15}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Pikeman':     {'strength': {'min':0.10, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.15}, 'talent': None, 'agility': {'min':-0.25, 'max':-0.15}},
+        'Archer':      {'strength': {'min':-0.25, 'max':-0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':0.15, 'max':0.25}},
+        'Knight':      {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.15, 'max':-0.10}, 'talent': {'min':0.05, 'max':0.10}, 'agility': {'min':-0.25, 'max':-0.15}},
+        'Atalanta':    {'strength': {'min':-0.20, 'max':-0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':0.15, 'max':0.25}},
+        'Priestess':   {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.20}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Mage':        {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.25}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Shaman':      {'strength': {'min':-0.25, 'max':-0.20}, 'intelligence': {'min':0.15, 'max':0.25}, 'talent': {'min':-0.15, 'max':-0.10}, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Assassin':    {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}},
+        'Guerriera':   {'strength': {'min':0.05, 'max':0.15}, 'intelligence': {'min':-0.20, 'max':-0.10}, 'talent': None, 'agility': {'min':-0.20, 'max':-0.15}}
+    }
+
+    req = itm.get('requirements') or {}
+    # spec may be passed in via function argument - attempt to read it from itm['_spec'] or from a parameter
+    # (we expect caller to supply spec parameter when needed). We'll check `itm.get('_spec')` first.
+    spec_to_apply = spec or (itm.get('_spec') if isinstance(itm, dict) else None)
+    if spec_to_apply and spec_to_apply in SPEC_MODS:
+        mods = SPEC_MODS[spec_to_apply]
+        for k in ['level','strength','intelligence','talent','agility']:
+            if k not in req:
+                continue
+            if k == 'level':
+                continue
+            if mods.get(k) is None:
+                continue
+            pmin = mods[k]['min']; pmax = mods[k]['max']
+            rng = _extract_min_max(req[k])
+            if rng is None:
+                continue
+            mn, mx = rng
+            low = math.ceil(mn * (1 + pmin))
+            high = math.ceil(mx * (1 + pmax))
+            req[k] = {'min': {'min': float(min(low, high))}, 'max': {'min': float(max(low, high))}}
+    itm['requirements'] = req
     # Apply aging to stats if requested
     try:
         aging_levels = int(aging or 0)
