@@ -99,7 +99,7 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            max-width: 1500px;
+            max-width: 1034px; /* 6 × 164px + 5 × 10px gaps */
             margin: 0 auto;
         }
 
@@ -354,6 +354,14 @@
                 <label class="field-label">Spec</label>
                 <select id="spec-{{ loop.index0 }}" onchange="changeSpec({{ loop.index0 }})">
                     <option value="">— selecione —</option>
+                    <option value="Mechanician">Mechanician</option>
+                    <option value="Fighter">Fighter</option>
+                    <option value="Pikeman">Pikeman</option>
+                    <option value="Archer">Archer</option>
+                    <option value="Knight">Knight</option>
+                    <option value="Atalanta">Atalanta</option>
+                    <option value="Priestess">Priestess</option>
+                    <option value="Mage">Mage</option>
                 </select>
 
                 {% if slot.name in ['Armadura', 'Escudo'] %}
@@ -411,10 +419,7 @@
             Knight:      {strength: {min:0.05, max:0.15}, intelligence: {min:-0.15, max:-0.10}, talent: {min:0.05, max:0.10}, agility: {min:-0.25, max:-0.15}},
             Atalanta:    {strength: {min:-0.20, max:-0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:0.15, max:0.25}},
             Priestess:   {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.20}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}},
-            Mage:        {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.25}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}},
-            Shaman:      {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.25}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}},
-            Assassin:    {strength: {min:0.05, max:0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:-0.20, max:-0.15}},
-            Guerriera:   {strength: {min:0.05, max:0.15}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:-0.20, max:-0.15}}
+            Mage:        {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.25}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}}
         };
 
         function updateImage(idx){
@@ -426,31 +431,16 @@
                 i.src = val;
                 i.style.display = 'block';
                 ph.style.display = 'none';
-                const item = ITEMS[val];
-                populateSpec(idx, item);
-                renderAll(idx, item);
+                renderAll(idx, ITEMS[val]);
                 updateAggregates();
             } else {
                 i.src = '';
                 i.style.display = 'none';
                 ph.style.display = 'block';
-                const spec = document.getElementById('spec-'+idx);
-                spec.innerHTML = '<option value="">— selecione —</option>';
                 document.getElementById('stats-'+idx).innerHTML = '';
                 document.getElementById('reqs-'+idx).innerHTML = '';
                 updateAggregates();
             }
-        }
-
-        function populateSpec(idx, item){
-            const specEl = document.getElementById('spec-'+idx);
-            specEl.innerHTML = '<option value="">— selecione —</option>';
-            if(!item || !item.spec || !item.spec.primaryClass) return;
-            item.spec.primaryClass.split(/\s+/).filter(Boolean).forEach(c=>{
-                const opt = document.createElement('option');
-                opt.value = c; opt.text = c;
-                specEl.appendChild(opt);
-            });
         }
 
         function changeSpec(idx){
