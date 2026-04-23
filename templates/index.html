@@ -5,100 +5,404 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkyTale Build Calculator</title>
     <link rel="icon" href="https://www.skytale.com.br/assets/skytale-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Visual identity adjusted to resemble SkyTale: dark, blue accents */
-        :root{ --bg:#06070a; --panel:#0f1720; --accent:#1e90ff; --muted:#cfd8e3 }
-        body { background: linear-gradient(180deg,var(--bg),#000); color:var(--muted); font-family:Inter,Arial,Helvetica,sans-serif; }
-        .header { display:flex; align-items:center; gap:12px; padding:18px 12px; background:linear-gradient(90deg, rgba(30,144,255,0.06), transparent); border-bottom:1px solid rgba(255,255,255,0.04); }
-        .header img.logo { height:56px; width:auto; display:block; }
-        .header .brand { font-size:20px; color:#fff; font-weight:700; letter-spacing:0.6px }
-        .title { text-align:center; color:#fff; margin:12px 0; }
-        .card { background:var(--panel); border:1px solid rgba(255,255,255,0.03); border-radius:10px }
-        .slots { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
-        .slot {
-            width:160px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; border:4px solid rgba(255,255,255,0.04); padding:8px; box-sizing:border-box; background:transparent; color:var(--muted); border-radius:10px;
+        :root {
+            --bg:       #07080d;
+            --bg2:      #0b0d18;
+            --panel:    #0e1220;
+            --panel2:   #131828;
+            --gold:     #c8880a;
+            --gold-lt:  #e8aa2c;
+            --gold-dim: rgba(200,136,10,0.35);
+            --blue:     #48b0f0;
+            --blue-dim: rgba(72,176,240,0.25);
+            --text:     #bab2a2;
+            --text-hi:  #ede5d5;
+            --border:   rgba(200,136,10,0.18);
+            --border-hi:rgba(200,136,10,0.55);
         }
-        .canvas { display:flex; align-items:center; justify-content:center; overflow:visible; background:transparent; }
-        .canvas img { display:block; max-width:none; max-height:none; }
-        .placeholder { display:block; }
-        select { width:100%; margin-top:6px; }
-        label { color:var(--muted); font-size:12px; }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse 60% 30% at 15% 0%, rgba(72,176,240,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 30% at 85% 0%, rgba(200,136,10,0.06) 0%, transparent 70%);
+        }
+
+        /* ── HEADER ─────────────────────────────── */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 24px;
+            background: linear-gradient(180deg, #0d1020 0%, #090b14 100%);
+            border-bottom: 1px solid var(--gold-dim);
+            box-shadow: 0 2px 24px rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo { height: 50px; width: auto; display: block; }
+
+        .header-sep {
+            width: 1px;
+            height: 38px;
+            background: var(--gold-dim);
+            border-radius: 1px;
+        }
+
+        .header-text { display: flex; flex-direction: column; gap: 2px; }
+
+        .header-title {
+            font-family: 'Cinzel', serif;
+            font-size: 19px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 55%, #7a5004 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1.5px;
+        }
+
+        .header-sub {
+            font-size: 10px;
+            color: var(--blue);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            opacity: 0.75;
+        }
+
+        /* ── MAIN ────────────────────────────────── */
+        .main { padding: 22px 14px 48px; }
+
+        .page-label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: var(--gold);
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.55;
+            margin-bottom: 18px;
+        }
+
+        /* ── SLOTS GRID ──────────────────────────── */
+        .slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .slot {
+            width: 164px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 8px 10px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .slot-name {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+            opacity: 0.85;
+        }
+
+        /* ── ITEM IMAGE ──────────────────────────── */
+        .canvas {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #03040a;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .canvas img { display: block; }
+        .placeholder { display: block; width: 100%; height: 100%; background: #03040a; }
+
+        /* ── FORM CONTROLS ───────────────────────── */
+        .field-label {
+            display: block;
+            margin-top: 7px;
+            margin-bottom: 2px;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text);
+            opacity: 0.55;
+            width: 100%;
+        }
+
+        select {
+            width: 100%;
+            background: var(--bg2);
+            color: var(--text-hi);
+            border: 1px solid rgba(200,136,10,0.22);
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.18s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c8880a' opacity='.6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 7px center;
+            padding-right: 22px;
+        }
+
+        select:focus, select:hover { border-color: var(--gold); }
+
+        select option, select optgroup {
+            background: #0e1220;
+            color: var(--text-hi);
+        }
+
+        /* ── ITEM STATS / REQS ───────────────────── */
+        .item-info {
+            width: 100%;
+            margin-top: 9px;
+            font-size: 11px;
+        }
+
+        .info-section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 9.5px;
+            color: var(--gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.75;
+            margin-top: 6px;
+            margin-bottom: 3px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid rgba(200,136,10,0.12);
+        }
+
+        .item-info .stat-row {
+            color: var(--text);
+            padding: 1px 0;
+            font-size: 11px;
+        }
+
+        /* ── AGGREGATE PANEL ─────────────────────── */
+        .agg-panel {
+            max-width: 820px;
+            margin: 26px auto 0;
+            background: var(--panel);
+            border: 1px solid var(--gold-dim);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 80px rgba(200,136,10,0.04);
+        }
+
+        .agg-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 20px;
+            background: linear-gradient(90deg, rgba(200,136,10,0.10) 0%, transparent 70%);
+            border-bottom: 1px solid var(--gold-dim);
+        }
+
+        .agg-header-bar {
+            width: 3px;
+            height: 18px;
+            background: linear-gradient(180deg, var(--gold-lt), #7a5004);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .agg-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold-lt);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .agg-body {
+            padding: 16px 22px;
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .agg-col {
+            flex: 1;
+            min-width: 180px;
+            padding: 0 18px 0 0;
+        }
+
+        .agg-col + .agg-col {
+            padding: 0 0 0 18px;
+            border-left: 1px solid rgba(200,136,10,0.12);
+        }
+
+        .agg-col-title {
+            font-family: 'Cinzel', serif;
+            font-size: 9.5px;
+            color: var(--blue);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--blue-dim);
+            opacity: 0.9;
+        }
+
+        .agg-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 2px 0;
+            font-size: 12px;
+            gap: 8px;
+        }
+
+        .agg-key {
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .agg-val {
+            color: var(--text-hi);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .agg-empty {
+            color: var(--text);
+            opacity: 0.35;
+            font-size: 12px;
+            padding: 10px 0;
+        }
+
+        /* ── SCROLLBAR ───────────────────────────── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
     </style>
 </head>
 <body>
-    <h1 class="title">SkyTale Build Calculator</h1>
-    <div class="slots">
-    {% for slot in slots %}
-        {% set size = slot_sizes[slot.name] %}
-        <div class="slot" id="slot-{{ loop.index0 }}">
-            <strong>{{ slot.name }}</strong>
-            <div class="canvas" id="canvas-{{ loop.index0 }}" style="width:{{ size.w }}px; height:{{ size.h }}px;">
-                <div class="placeholder" id="ph-{{ loop.index0 }}" style="width:100%;height:100%;background:#000;"></div>
-                <img id="img-{{ loop.index0 }}" src="" alt="" style="display:none;" />
-            </div>
-            <select id="select-{{ loop.index0 }}" onchange="updateImage({{ loop.index0 }})" style="margin-top:6px;">
-                <option value="">— selecione —</option>
-                {% for cat, items in slot_items[slot.name].items() %}
-                    <optgroup label="--{{ cat|capitalize }}--">
-                    {% for item in items %}
-                        {% if item.assets and item.assets.assetFile %}
-                        <option value="{{ item.assets.assetFile }}">{{ item.name_en }}</option>
-                        {% endif %}
+    <header class="header">
+        <img class="header-logo" src="https://www.skytale.com.br/assets/skytale-logo.png" alt="SkyTale">
+        <div class="header-sep"></div>
+        <div class="header-text">
+            <span class="header-title">Build Calculator</span>
+            <span class="header-sub">The Ascension Begins Here</span>
+        </div>
+    </header>
+
+    <div class="main">
+        <p class="page-label">Monte seu build — analise atributos e requisitos</p>
+
+        <div class="slots">
+        {% for slot in slots %}
+            {% set size = slot_sizes[slot.name] %}
+            <div class="slot" id="slot-{{ loop.index0 }}">
+                <span class="slot-name">{{ slot.name }}</span>
+                <div class="canvas" id="canvas-{{ loop.index0 }}" style="width:{{ size.w }}px; height:{{ size.h }}px;">
+                    <div class="placeholder" id="ph-{{ loop.index0 }}" style="width:100%;height:100%;"></div>
+                    <img id="img-{{ loop.index0 }}" src="" alt="" style="display:none;" />
+                </div>
+
+                <select id="select-{{ loop.index0 }}" onchange="updateImage({{ loop.index0 }})">
+                    <option value="">— selecione —</option>
+                    {% for cat, items in slot_items[slot.name].items() %}
+                        <optgroup label="{{ cat|capitalize }}">
+                        {% for item in items %}
+                            {% if item.assets and item.assets.assetFile %}
+                            <option value="{{ item.assets.assetFile }}">{{ item.name_en }}</option>
+                            {% endif %}
+                        {% endfor %}
+                        </optgroup>
                     {% endfor %}
-                    </optgroup>
-                {% endfor %}
-            </select>
-            <label style="display:block;margin-top:6px;color:white;">Raridade:</label>
-            <select id="rarity-{{ loop.index0 }}" onchange="changeRarity({{ loop.index0 }})">
-                <option value="normal" selected>Normal</option>
-                <option value="rare">Raro</option>
-                <option value="epic">Épico</option>
-                <option value="legendary">Lendário</option>
-            </select>
+                </select>
 
-            <label style="display:block;margin-top:6px;color:white;">Spec:</label>
-            <select id="spec-{{ loop.index0 }}" onchange="changeSpec({{ loop.index0 }})">
-                <option value="">— selecione spec —</option>
-            </select>
+                <label class="field-label">Raridade</label>
+                <select id="rarity-{{ loop.index0 }}" onchange="changeRarity({{ loop.index0 }})">
+                    <option value="normal" selected>Normal</option>
+                    <option value="rare">Raro</option>
+                    <option value="epic">Épico</option>
+                    <option value="legendary">Lendário</option>
+                </select>
 
-            {% if slot.name in ['Armadura', 'Escudo'] %}
-            <label style="display:block;margin-top:6px;color:white;">Aging:</label>
-            <select id="aging-{{ loop.index0 }}" onchange="onAgingChange({{ loop.index0 }})">
-                {% for i in range(0,18) %}
-                <option value="{{ i }}">+{{ i }}</option>
-                {% endfor %}
-            </select>
-            {% endif %}
+                <label class="field-label">Spec</label>
+                <select id="spec-{{ loop.index0 }}" onchange="changeSpec({{ loop.index0 }})">
+                    <option value="">— selecione —</option>
+                </select>
 
-            <div id="info-{{ loop.index0 }}" style="width:100%;margin-top:8px;font-size:12px;color:#ddd;">
-                <div><strong>Stats:</strong><div id="stats-{{ loop.index0 }}"></div></div>
-                <div style="margin-top:6px;"><strong>Requirements:</strong><div id="reqs-{{ loop.index0 }}"></div></div>
+                {% if slot.name in ['Armadura', 'Escudo'] %}
+                <label class="field-label">Aging</label>
+                <select id="aging-{{ loop.index0 }}" onchange="onAgingChange({{ loop.index0 }})">
+                    {% for i in range(0,18) %}
+                    <option value="{{ i }}">+{{ i }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+
+                <div class="item-info" id="info-{{ loop.index0 }}">
+                    <div class="info-section-title">Stats</div>
+                    <div id="stats-{{ loop.index0 }}"></div>
+                    <div class="info-section-title">Requisitos</div>
+                    <div id="reqs-{{ loop.index0 }}"></div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        <div class="agg-panel">
+            <div class="agg-header">
+                <div class="agg-header-bar"></div>
+                <h3>Stats Finais do Build</h3>
+            </div>
+            <div class="agg-body" id="aggregate-results">
+                <span class="agg-empty">Selecione itens para ver os stats combinados.</span>
             </div>
         </div>
-    {% endfor %}
-    </div>
-
-    <div id="aggregate-panel" style="width:90%;max-width:900px;margin:20px auto;padding:12px;border:2px dashed #666;border-radius:8px;">
-        <h3 style="margin:0 0 8px 0;">Stats finais</h3>
-        <div id="aggregate-results" style="font-size:14px;color:#ddd;"></div>
     </div>
 
     <script>
-        const rarityColors = {
-            normal: '#2ecc71',
-            rare: '#5dade2',
-            epic: '#9b59b6',
-            legendary: '#f1c40f'
+        const rarityBorders = {
+            normal:    '1px solid rgba(46,204,113,0.45)',
+            rare:      '1px solid rgba(74,176,240,0.55)',
+            epic:      '1px solid rgba(155,89,182,0.60)',
+            legendary: '1px solid rgba(232,170,44,0.70)'
         };
 
-        // Items map injected from backend
+        const rarityGlow = {
+            normal:    'none',
+            rare:      '0 0 10px rgba(74,176,240,0.12)',
+            epic:      '0 0 10px rgba(155,89,182,0.15)',
+            legendary: '0 0 14px rgba(232,170,44,0.18)'
+        };
+
         const ITEMS = {{ items_map | tojson }};
 
-        /*
-         * Regra dos Itens Especializados (tabela de modificadores)
-         * Cada entrada contém um intervalo {min, max} em decimal (ex: 0.05 = +5%, -0.25 = -25%).
-         * Destaque: a tabela abaixo reflete exatamente os intervalos fornecidos na especificação.
-         */
         const SPEC_MODS = {
             Mechanician: {strength: {min:0.05, max:0.10}, intelligence: {min:-0.20, max:-0.10}, talent: null, agility: {min:-0.25, max:-0.15}},
             Fighter:     {strength: {min:0.10, max:0.15}, intelligence: {min:-0.20, max:-0.15}, talent: null, agility: {min:-0.20, max:-0.15}},
@@ -117,15 +421,11 @@
             const s = document.getElementById('select-'+idx);
             const i = document.getElementById('img-'+idx);
             const ph = document.getElementById('ph-'+idx);
-            const canvas = document.getElementById('canvas-'+idx);
             const val = s.value || '';
             if(val){
                 i.src = val;
                 i.style.display = 'block';
                 ph.style.display = 'none';
-                canvas.style.alignItems = 'center';
-                canvas.style.justifyContent = 'center';
-                // populate spec select and info
                 const item = ITEMS[val];
                 populateSpec(idx, item);
                 renderAll(idx, item);
@@ -134,82 +434,64 @@
                 i.src = '';
                 i.style.display = 'none';
                 ph.style.display = 'block';
-                // clear spec and info
                 const spec = document.getElementById('spec-'+idx);
-                spec.innerHTML = '<option value="">— selecione spec —</option>';
-                document.getElementById('stats-'+idx).innerText = '';
-                document.getElementById('reqs-'+idx).innerText = '';
-                // update aggregates after clearing selection to avoid residual stats
+                spec.innerHTML = '<option value="">— selecione —</option>';
+                document.getElementById('stats-'+idx).innerHTML = '';
+                document.getElementById('reqs-'+idx).innerHTML = '';
                 updateAggregates();
             }
         }
 
         function populateSpec(idx, item){
             const specEl = document.getElementById('spec-'+idx);
-            specEl.innerHTML = '<option value="">— selecione spec —</option>';
+            specEl.innerHTML = '<option value="">— selecione —</option>';
             if(!item || !item.spec || !item.spec.primaryClass) return;
-            const classes = item.spec.primaryClass.split(/\s+/).filter(Boolean);
-            classes.forEach(c=>{
+            item.spec.primaryClass.split(/\s+/).filter(Boolean).forEach(c=>{
                 const opt = document.createElement('option');
-                opt.value = c;
-                opt.text = c;
+                opt.value = c; opt.text = c;
                 specEl.appendChild(opt);
             });
         }
 
         function changeSpec(idx){
-            const select = document.getElementById('select-'+idx);
-            const val = select.value;
+            const val = document.getElementById('select-'+idx).value;
             if(!val) return;
-            const item = ITEMS[val];
-            renderAll(idx, item);
+            renderAll(idx, ITEMS[val]);
             updateAggregates();
         }
 
         function changeRarity(idx){
             const r = document.getElementById('rarity-'+idx).value || 'normal';
             const slot = document.getElementById('slot-'+idx);
-            slot.style.border = '4px solid ' + (rarityColors[r] || rarityColors.normal);
-            slot.style.borderRadius = '10px';
-            // re-render stats/reqs if item selected
-            const select = document.getElementById('select-'+idx);
-            const val = select.value;
-            if(val){
-                const item = ITEMS[val];
-                renderAll(idx, item);
-                updateAggregates();
-            }
+            slot.style.border = rarityBorders[r] || rarityBorders.normal;
+            slot.style.boxShadow = rarityGlow[r] || 'none';
+            const val = document.getElementById('select-'+idx).value;
+            if(val){ renderAll(idx, ITEMS[val]); updateAggregates(); }
         }
 
         function onAgingChange(idx){
-            const select = document.getElementById('select-'+idx);
-            if(!select || !select.value) return;
-            const item = ITEMS[select.value];
-            if(!item) return;
-            renderAll(idx, item);
-            // renderAll already calls updateAggregates
+            const val = document.getElementById('select-'+idx).value;
+            if(!val) return;
+            renderAll(idx, ITEMS[val]);
         }
 
         function renderAll(idx, item){
             if(!item) return;
             const rarity = document.getElementById('rarity-'+idx).value || 'normal';
-            const spec = document.getElementById('spec-'+idx).value || '';
+            const spec   = document.getElementById('spec-'+idx).value || '';
             renderStats(idx, item, rarity);
             renderReqs(idx, item, spec);
-            // ensure aggregates reflect any changes (aging, rarity, spec)
             updateAggregates();
         }
 
-        // Apply rarity bonuses to a shallow copy of stats and return a simple key->value object for display
         function renderStats(idx, item, rarity){
             const sub = item._category || item.subCategory || '';
-            const isWeapon = ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas'].includes(sub);
-            const isBootsOrGloves = ['botas','luvas'].includes(sub);
-            const isArmorOrRobe = ['armaduras','roupoes'].includes(sub);
-            const isShield = ['escudos','orbitais'].includes(sub);
-            const isBracelet = ['braceletes'].includes(sub);
+            const isWeapon       = ['machados','garras','varinhas','foices','lancas','arcos','martelos','espadas'].includes(sub);
+            const isBootsOrGloves= ['botas','luvas'].includes(sub);
+            const isArmorOrRobe  = ['armaduras','roupoes'].includes(sub);
+            const isShield       = ['escudos','orbitais'].includes(sub);
+            const isBracelet     = ['braceletes'].includes(sub);
 
-            // base stats - flatten for display, prefer min/max pairs when available
             const out = {};
             if(item.stats){
                 for(const k in item.stats){
@@ -220,366 +502,255 @@
                         out['absorption'] = aMin + ' - ' + aMax;
                         continue;
                     }
-                    if (k === 'absorption_max') continue; 
+                    if(k === 'absorption_max') continue;
                     if(k === 'attackRating'){
-                        // Normalize attackRating as either single number or range
                         const aMin = item.stats['attackRating'];
                         const aMax = item.stats['attackRating_max'];
-                        if(aMin !== undefined && aMax !== undefined){
-                            out['attackRating'] = String(aMin) + ' - ' + String(aMax);
-                        } else if(aMin !== undefined){
-                            out['attackRating'] = String(aMin);
-                        }
+                        out['attackRating'] = (aMin !== undefined && aMax !== undefined)
+                            ? String(aMin) + ' - ' + String(aMax) : String(aMin);
                         continue;
                     }
-                    if (k === 'attackRating_max') continue;
-                    if(k === 'attackPower' && v && v.min && v.min.min!==undefined){
-                        // attackPower may contain alternative min/max values
+                    if(k === 'attackRating_max') continue;
+                    if(k === 'attackPower' && v && v.min && v.min.min !== undefined){
                         const min1 = v.min.min;
-                        const min2 = (v.min.max!==undefined ? v.min.max : null);
-                        const max1 = (v.max && v.max.min!==undefined ? v.max.min : null);
-                        const max2 = (v.max && v.max.max!==undefined ? v.max.max : null);
-                        // format: "min1(min2) - max1(max2)" if alternatives exist
-                        let left = String(min1);
-                        if(min2!==null && min2!==min1) left += '('+String(min2)+')';
-                        let right = (max1!==null ? String(max1) : '0');
-                        if(max2!==null && max2!==max1) right += '('+String(max2)+')';
+                        const min2 = (v.min.max !== undefined ? v.min.max : null);
+                        const max1 = (v.max && v.max.min !== undefined ? v.max.min : null);
+                        const max2 = (v.max && v.max.max !== undefined ? v.max.max : null);
+                        let left  = String(min1); if(min2 !== null && min2 !== min1) left  += '('+min2+')';
+                        let right = (max1 !== null ? String(max1) : '0'); if(max2 !== null && max2 !== max1) right += '('+max2+')';
                         out['attackPower'] = left + ' - ' + right;
                         continue;
                     }
-                    if(typeof v === 'level') out[k] = v;
-                    else if(v && v.min && v.min.min!==undefined) out[k] = v.min.min + ' - ' + (v.max && v.max.min ? v.max.min : v.min.max || v.min.min);
+                    if(typeof v === 'number') out[k] = v;
+                    else if(v && v.min && v.min.min !== undefined) out[k] = v.min.min + ' - ' + (v.max && v.max.min ? v.max.min : v.min.max || v.min.min);
                     else out[k] = JSON.stringify(v);
                 }
             }
 
-            // apply rarity bonuses
+            // rarity bonuses
             let atkPowerBonus=0, atkRatingBonus=0, defBonus=0, absBonus=0;
-            if(rarity === 'rare'){
-                if(isWeapon){ atkPowerBonus = 4; atkRatingBonus = 10; }
-                if(isBootsOrGloves){ defBonus = 10; absBonus = 1; }
-                if(isArmorOrRobe){ defBonus = 30; absBonus = 1; }
-                if(isShield){ absBonus = 1; }
-                if(isBracelet){ atkRatingBonus = 10; }
-            } else if(rarity === 'epic'){
-                if(isWeapon){ atkPowerBonus = 8; atkRatingBonus = 20; }
-                if(isBootsOrGloves){ defBonus = 20; absBonus = 2; }
-                if(isArmorOrRobe){ defBonus = 60; absBonus = 2; }
-                if(isShield){ absBonus = 2; }
-                if(isBracelet){ atkRatingBonus = 20; }
-            } else if(rarity === 'legendary'){
-                if(isWeapon){ atkPowerBonus = 12; atkRatingBonus = 30; }
-                if(isBootsOrGloves){ defBonus = 30; absBonus = 3; }
-                if(isArmorOrRobe){ defBonus = 90; absBonus = 3; }
-                if(isShield){ absBonus = 3; }
-                if(isBracelet){ atkRatingBonus = 30; }
+            if(rarity==='rare'){
+                if(isWeapon)       { atkPowerBonus=4;  atkRatingBonus=10; }
+                if(isBootsOrGloves){ defBonus=10; absBonus=1; }
+                if(isArmorOrRobe)  { defBonus=30; absBonus=1; }
+                if(isShield)       { absBonus=1; }
+                if(isBracelet)     { atkRatingBonus=10; }
+            } else if(rarity==='epic'){
+                if(isWeapon)       { atkPowerBonus=8;  atkRatingBonus=20; }
+                if(isBootsOrGloves){ defBonus=20; absBonus=2; }
+                if(isArmorOrRobe)  { defBonus=60; absBonus=2; }
+                if(isShield)       { absBonus=2; }
+                if(isBracelet)     { atkRatingBonus=20; }
+            } else if(rarity==='legendary'){
+                if(isWeapon)       { atkPowerBonus=12; atkRatingBonus=30; }
+                if(isBootsOrGloves){ defBonus=30; absBonus=3; }
+                if(isArmorOrRobe)  { defBonus=90; absBonus=3; }
+                if(isShield)       { absBonus=3; }
+                if(isBracelet)     { atkRatingBonus=30; }
             }
 
-            // apply to flattened out
-            if(atkPowerBonus && out.attackPower){
-                // Add bonus to all numeric parts inside attackPower string, preserving parentheses
-                // e.g. "14(16) - 24(27)" -> add bonus to each number
-                out.attackPower = out.attackPower.replace(/(\d+)/g, (m)=>String(Number(m) + atkPowerBonus));
-            }
-            if(atkRatingBonus && out.attackRating){
-                // attackRating can be a single number or a range "a - b"
-                // Apply bonus to all numbers found
-                out.attackRating = String(out.attackRating).replace(/(\d+)/g, (m)=>String(Number(m) + atkRatingBonus));
-            }
+            if(atkPowerBonus && out.attackPower)
+                out.attackPower = out.attackPower.replace(/(\d+)/g, m=>String(Number(m)+atkPowerBonus));
+            if(atkRatingBonus && out.attackRating)
+                out.attackRating = String(out.attackRating).replace(/(\d+)/g, m=>String(Number(m)+atkRatingBonus));
             if(defBonus && out.defense){
-                // defense stored as range string
-                const parts = out.defense.toString().split('-').map(p=>parseInt(p));
-                if(parts.length===2 && !isNaN(parts[0])){
-                    out.defense = (parts[0]+defBonus) + ' - ' + (parts[1]+defBonus);
-                }
+                const p = out.defense.toString().split('-').map(p=>parseInt(p));
+                if(p.length===2 && !isNaN(p[0])) out.defense = (p[0]+defBonus)+' - '+(p[1]+defBonus);
             }
             if(absBonus && out.absorption){
-                // out.absorption is a range like '4.8 - 5.3'
-                const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
-                if(parts.length===2 && !isNaN(parts[0])){
-                    out.absorption = ( (parts[0]+absBonus).toFixed(1) ) + ' - ' + ( (parts[1]+absBonus).toFixed(1) );
-                } else if(!isNaN(Number(out.absorption))){
-                    out.absorption = (Number(out.absorption) + absBonus).toFixed(1);
-                }
+                const p = out.absorption.toString().split('-').map(p=>parseFloat(p));
+                if(p.length===2 && !isNaN(p[0])) out.absorption = (p[0]+absBonus).toFixed(1)+' - '+(p[1]+absBonus).toFixed(1);
+                else if(!isNaN(Number(out.absorption))) out.absorption = (Number(out.absorption)+absBonus).toFixed(1);
             }
 
-            // Apply aging modifications to defense/absorption/block for Armadura/Escudo slots
-            try{
+            // aging
+            try {
                 const agingEl = document.getElementById('aging-'+idx);
-                const aging = agingEl ? parseInt(agingEl.value || 0) : 0;
-                const sub = item._category || item.subCategory || '';
-                const isArmorOrRobe = ['armaduras','roupoes'].includes(sub);
-                const isShield = ['escudos'].includes(sub);
-                const isOrbital = ['orbitais'].includes(sub);
+                const aging = agingEl ? parseInt(agingEl.value||0) : 0;
+                const s2 = item._category || item.subCategory || '';
+                const isAR = ['armaduras','roupoes'].includes(s2);
+                const isSH = ['escudos'].includes(s2);
+                const isOR = ['orbitais'].includes(s2);
                 if(aging > 0){
-                    if(isArmorOrRobe && out.defense){
-                        // parse defense range or single
-                        const parts = out.defense.toString().split('-').map(p=>parseInt(p));
-                        if(parts.length===2 && !isNaN(parts[0])){
-                            let mn = parts[0];
-                            let mx = parts[1];
-                            for(let lvl=0; lvl<aging; lvl++){
-                                mn = Math.floor(mn * 1.05);
-                                mx = Math.floor(mx * 1.05);
-                            }
-                            out.defense = mn + ' - ' + mx;
+                    if(isAR && out.defense){
+                        const p = out.defense.toString().split('-').map(p=>parseInt(p));
+                        if(p.length===2 && !isNaN(p[0])){
+                            let mn=p[0], mx=p[1];
+                            for(let l=0;l<aging;l++){ mn=Math.floor(mn*1.05); mx=Math.floor(mx*1.05); }
+                            out.defense = mn+' - '+mx;
                         } else if(!isNaN(Number(out.defense))){
-                            let v = parseInt(out.defense);
-                            for(let lvl=0; lvl<aging; lvl++) v = Math.floor(v * 1.05);
-                            out.defense = String(v);
+                            let v=parseInt(out.defense);
+                            for(let l=0;l<aging;l++) v=Math.floor(v*1.05);
+                            out.defense=String(v);
                         }
                     }
-                    if(isArmorOrRobe && out.absorption){
-                        // absorption like '5.3 - 6.1' or single
-                        const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
-                        if(parts.length===2 && !isNaN(parts[0])){
-                            let mn = parts[0];
-                            let mx = parts[1];
-                            for(let lvl=1; lvl<=aging; lvl++){
-                                const add = (lvl<=9 ? 0.5 : 1.0);
-                                mn = Math.round((mn + add) * 10) / 10;
-                                mx = Math.round((mx + add) * 10) / 10;
-                            }
-                            out.absorption = mn.toFixed(1) + ' - ' + mx.toFixed(1);
+                    if(isAR && out.absorption){
+                        const p = out.absorption.toString().split('-').map(p=>parseFloat(p));
+                        if(p.length===2 && !isNaN(p[0])){
+                            let mn=p[0], mx=p[1];
+                            for(let l=1;l<=aging;l++){ const a=l<=9?0.5:1.0; mn=Math.round((mn+a)*10)/10; mx=Math.round((mx+a)*10)/10; }
+                            out.absorption=mn.toFixed(1)+' - '+mx.toFixed(1);
                         } else if(!isNaN(Number(out.absorption))){
-                            let v = parseFloat(out.absorption);
-                            for(let lvl=1; lvl<=aging; lvl++){
-                                const add = (lvl<=9 ? 0.5 : 1.0);
-                                v = Math.round((v + add) * 10) / 10;
-                            }
-                            out.absorption = v.toFixed(1);
+                            let v=parseFloat(out.absorption);
+                            for(let l=1;l<=aging;l++){ const a=l<=9?0.5:1.0; v=Math.round((v+a)*10)/10; }
+                            out.absorption=v.toFixed(1);
                         }
                     }
-                    if(isShield){
+                    if(isSH){
                         if(out.block){
-                            const parts = out.block.toString().split('-').map(p=>parseFloat(p));
-                            if(parts.length===2 && !isNaN(parts[0])){
-                                let mn = parts[0];
-                                let mx = parts[1];
-                                for(let lvl=0; lvl<aging; lvl++){
-                                    mn = mn + 0.5;
-                                    mx = mx + 0.5;
-                                }
-                                out.block = Math.floor(mn) + ' - ' + Math.floor(mx);
-                            } else if(!isNaN(Number(out.block))){
-                                let v = parseFloat(out.block);
-                                for(let lvl=0; lvl<aging; lvl++) v = v + 0.5;
-                                out.block = String(Math.floor(v));
-                            }
+                            const p=out.block.toString().split('-').map(p=>parseFloat(p));
+                            if(p.length===2&&!isNaN(p[0])){ let mn=p[0],mx=p[1]; for(let l=0;l<aging;l++){mn+=0.5;mx+=0.5;} out.block=Math.floor(mn)+' - '+Math.floor(mx); }
+                            else if(!isNaN(Number(out.block))){ let v=parseFloat(out.block); for(let l=0;l<aging;l++) v+=0.5; out.block=String(Math.floor(v)); }
                         }
                         if(out.absorption){
-                            const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
-                            if(parts.length===2 && !isNaN(parts[0])){
-                                let mn = parts[0];
-                                let mx = parts[1];
-                                for(let lvl=1; lvl<=aging; lvl++){
-                                    const add = (lvl<=9 ? 0.2 : 0.4);
-                                    mn = Math.round((mn + add) * 10) / 10;
-                                    mx = Math.round((mx + add) * 10) / 10;
-                                }
-                                out.absorption = mn.toFixed(1) + ' - ' + mx.toFixed(1);
-                            } else if(!isNaN(Number(out.absorption))){
-                                let v = parseFloat(out.absorption);
-                                for(let lvl=1; lvl<=aging; lvl++){
-                                    const add = (lvl<=9 ? 0.2 : 0.4);
-                                    v = Math.round((v + add) * 10) / 10;
-                                }
-                                out.absorption = v.toFixed(1);
-                            }
+                            const p=out.absorption.toString().split('-').map(p=>parseFloat(p));
+                            if(p.length===2&&!isNaN(p[0])){ let mn=p[0],mx=p[1]; for(let l=1;l<=aging;l++){const a=l<=9?0.2:0.4;mn=Math.round((mn+a)*10)/10;mx=Math.round((mx+a)*10)/10;} out.absorption=mn.toFixed(1)+' - '+mx.toFixed(1); }
+                            else if(!isNaN(Number(out.absorption))){ let v=parseFloat(out.absorption); for(let l=1;l<=aging;l++){const a=l<=9?0.2:0.4;v=Math.round((v+a)*10)/10;} out.absorption=v.toFixed(1); }
                         }
                     }
-                    if(isOrbital){
+                    if(isOR){
                         if(out.defense){
-                            // apply +10% per level iteratively
-                            const parts = out.defense.toString().split('-').map(p=>parseInt(p));
-                            if(parts.length===2 && !isNaN(parts[0])){
-                                let mn = parts[0];
-                                let mx = parts[1];
-                                for(let lvl=0; lvl<aging; lvl++){
-                                    mn = Math.floor(mn * 1.10);
-                                    mx = Math.floor(mx * 1.10);
-                                }
-                                out.defense = mn + ' - ' + mx;
-                            } else if(!isNaN(Number(out.defense))){
-                                let v = parseInt(out.defense);
-                                for(let lvl=0; lvl<aging; lvl++) v = Math.floor(v * 1.10);
-                                out.defense = String(v);
-                            }
+                            const p=out.defense.toString().split('-').map(p=>parseInt(p));
+                            if(p.length===2&&!isNaN(p[0])){ let mn=p[0],mx=p[1]; for(let l=0;l<aging;l++){mn=Math.floor(mn*1.10);mx=Math.floor(mx*1.10);} out.defense=mn+' - '+mx; }
+                            else if(!isNaN(Number(out.defense))){ let v=parseInt(out.defense); for(let l=0;l<aging;l++) v=Math.floor(v*1.10); out.defense=String(v); }
                         }
                         if(out.absorption){
-                            const parts = out.absorption.toString().split('-').map(p=>parseFloat(p));
-                            if(parts.length===2 && !isNaN(parts[0])){
-                                let mn = parts[0];
-                                let mx = parts[1];
-                                for(let lvl=1; lvl<=aging; lvl++){
-                                    const add = (lvl<=9 ? 0.5 : 1.0);
-                                    mn = Math.round((mn + add) * 10) / 10;
-                                    mx = Math.round((mx + add) * 10) / 10;
-                                }
-                                out.absorption = mn.toFixed(1) + ' - ' + mx.toFixed(1);
-                            } else if(!isNaN(Number(out.absorption))){
-                                let v = parseFloat(out.absorption);
-                                for(let lvl=1; lvl<=aging; lvl++){
-                                    const add = (lvl<=9 ? 0.5 : 1.0);
-                                    v = Math.round((v + add) * 10) / 10;
-                                }
-                                out.absorption = v.toFixed(1);
-                            }
+                            const p=out.absorption.toString().split('-').map(p=>parseFloat(p));
+                            if(p.length===2&&!isNaN(p[0])){ let mn=p[0],mx=p[1]; for(let l=1;l<=aging;l++){const a=l<=9?0.5:1.0;mn=Math.round((mn+a)*10)/10;mx=Math.round((mx+a)*10)/10;} out.absorption=mn.toFixed(1)+' - '+mx.toFixed(1); }
+                            else if(!isNaN(Number(out.absorption))){ let v=parseFloat(out.absorption); for(let l=1;l<=aging;l++){const a=l<=9?0.5:1.0;v=Math.round((v+a)*10)/10;} out.absorption=v.toFixed(1); }
                         }
                     }
                 }
-            } catch(e){ console.warn('Aging apply error', e); }
+            } catch(e){ console.warn('aging', e); }
 
-            // render with explicit ordering for important keys
-            const ordered_stats_keys = ['defense','absorption','block','hp','stamina','mana'];
             const container = document.getElementById('stats-'+idx);
             container.innerHTML = '';
+            const order = ['defense','absorption','block','hp','stamina','mana'];
             const renderOrder = [];
-            ordered_stats_keys.forEach(k=>{ if(out.hasOwnProperty(k)) renderOrder.push(k); });
+            order.forEach(k=>{ if(out.hasOwnProperty(k)) renderOrder.push(k); });
             Object.keys(out).forEach(k=>{ if(!renderOrder.includes(k)) renderOrder.push(k); });
             renderOrder.forEach(k=>{
                 const el = document.createElement('div');
+                el.className = 'stat-row';
                 el.textContent = k + ': ' + out[k];
                 container.appendChild(el);
             });
         }
+
         function renderReqs(idx, item, spec){
             const base = item.requirements || {};
             const mods = SPEC_MODS[spec] || null;
             const display = {};
-            // keys of interest
             ['level','strength','intelligence','talent','agility'].forEach(k=>{
                 const v = base[k];
-                if(v===undefined) { display[k] = '-'; return; }
-                if(k==='level') { display[k] = v; return; }
+                if(v === undefined){ display[k] = '-'; return; }
+                if(k === 'level'){ display[k] = v; return; }
                 if(mods && mods[k]){
-                    const pmin = mods[k].min;
-                    const pmax = mods[k].max;
-                    const low = Math.ceil(v * (1 + pmin));
-                    const high = Math.ceil(v * (1 + pmax));
-                    // ensure ascending order
-                    const mn = Math.min(low, high);
-                    const mx = Math.max(low, high);
-                    display[k] = mn + ' - ' + mx;
-                } else {
-                    display[k] = v;
-                }
+                    const low  = Math.ceil(v * (1 + mods[k].min));
+                    const high = Math.ceil(v * (1 + mods[k].max));
+                    display[k] = Math.min(low,high) + ' - ' + Math.max(low,high);
+                } else { display[k] = v; }
             });
 
             const container = document.getElementById('reqs-'+idx);
             container.innerHTML = '';
-            // enforce order for requirement keys
-            const ordered_req_keys = ['strength','intelligence','talent','agility'];
-            const reqOrder = [];
-            // keep level first
             if(display.hasOwnProperty('level')){
-                const elL = document.createElement('div');
-                elL.textContent = 'level: ' + display['level'];
-                container.appendChild(elL);
-            }
-            ordered_req_keys.forEach(k=>{ if(display.hasOwnProperty(k)) reqOrder.push(k); });
-            Object.keys(display).forEach(k=>{ if(k==='level') return; if(!reqOrder.includes(k)) reqOrder.push(k); });
-            reqOrder.forEach(k=>{
                 const el = document.createElement('div');
+                el.className = 'stat-row';
+                el.textContent = 'level: ' + display['level'];
+                container.appendChild(el);
+            }
+            ['strength','intelligence','talent','agility'].forEach(k=>{
+                if(!display.hasOwnProperty(k)) return;
+                const el = document.createElement('div');
+                el.className = 'stat-row';
                 el.textContent = k + ': ' + display[k];
                 container.appendChild(el);
             });
         }
 
-        // initialize default borders on load
         window.addEventListener('DOMContentLoaded', ()=>{
-            const slots = document.querySelectorAll('[id^="canvas-"]');
-            slots.forEach((c)=>{
-                const id = c.id.split('-')[1];
-                const r = document.getElementById('rarity-'+id);
-                if(r) changeRarity(id);
+            document.querySelectorAll('[id^="slot-"]').forEach(slot=>{
+                const id = slot.id.split('-')[1];
+                changeRarity(id);
             });
-            // render spec mods table for visibility
-            try{
-                const el = document.getElementById('spec-table');
-                if(el){
-                    el.textContent = JSON.stringify(SPEC_MODS, null, 2);
-                }
-            }catch(e){console.warn(e)}
-            // update aggregates initially
             updateAggregates();
         });
 
-        function gatherSelectedAssets(){
-            const assets = [];
-            // slots select ids are select-0 ... iterate all selects
-            const selects = document.querySelectorAll('select[id^="select-"]');
-            selects.forEach((s)=>{
-                const id = parseInt(s.id.split('-')[1]);
-                // exclude Arma 2 (0) and Arma 1 (2)
-                // if(id===0 || id===2) return;
-                if(s.value) assets.push(s.value);
-            });
-            return assets;
-        }
-
         function updateAggregates(){
-            // include per-slot rarity and spec when requesting aggregation
             const raw = [];
-            const selects = document.querySelectorAll('select[id^="select-"]');
-            selects.forEach((s)=>{
-                const id = parseInt(s.id.split('-')[1]);
-                //if(id===0 || id===2) return;
+            document.querySelectorAll('select[id^="select-"]').forEach(s=>{
                 if(!s.value) return;
+                const id = parseInt(s.id.split('-')[1]);
                 const rarity = document.getElementById('rarity-'+id).value || 'normal';
-                const spec = document.getElementById('spec-'+id).value || '';
-                // include aging if present
-                const agingEl = document.getElementById('aging-'+id);
-                const aging = agingEl ? parseInt(agingEl.value || 0) : 0;
-                raw.push({ asset: s.value, rarity: rarity, spec: spec, aging: aging });
+                const spec   = document.getElementById('spec-'+id).value || '';
+                const agingEl= document.getElementById('aging-'+id);
+                const aging  = agingEl ? parseInt(agingEl.value||0) : 0;
+                raw.push({ asset: s.value, rarity, spec, aging });
             });
+
+            const el = document.getElementById('aggregate-results');
+
+            if(raw.length === 0){
+                el.innerHTML = '<span class="agg-empty">Selecione itens para ver os stats combinados.</span>';
+                return;
+            }
+
             fetch('/aggregate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ assets: raw })
             }).then(r=>r.json()).then(data=>{
-                const el = document.getElementById('aggregate-results');
                 el.innerHTML = '';
                 if(!data) return;
                 const s = data.stats || {};
                 const r = data.requirements || {};
-                const hs = document.createElement('div');
-                hs.innerHTML = '<strong>Stats:</strong>';
-                const ordered_stats_keys = ['defense','absorption','block','hp','stamina','mana','attackPower','attackRating','critical'];
-                const statOrder = [];
-                ordered_stats_keys.forEach(k=>{ if(s.hasOwnProperty(k)) statOrder.push(k); });
-                Object.keys(s).forEach(k=>{ if(!statOrder.includes(k)) statOrder.push(k); });
-                statOrder.forEach(k=>{
+
+                // Stats column
+                const statsCol = document.createElement('div');
+                statsCol.className = 'agg-col';
+                const statsTitle = document.createElement('div');
+                statsTitle.className = 'agg-col-title';
+                statsTitle.textContent = 'Atributos';
+                statsCol.appendChild(statsTitle);
+
+                const statOrder = ['defense','absorption','block','hp','stamina','mana','attackPower','attackRating','critical'];
+                const finalStatOrder = [];
+                statOrder.forEach(k=>{ if(s.hasOwnProperty(k)) finalStatOrder.push(k); });
+                Object.keys(s).forEach(k=>{ if(!finalStatOrder.includes(k)) finalStatOrder.push(k); });
+                finalStatOrder.forEach(k=>{
                     const v = s[k];
-                    const div = document.createElement('div');
-                    if(Array.isArray(v)) div.textContent = k + ': ' + v[0] + ' - ' + v[1];
-                    else div.textContent = k + ': ' + v;
-                    hs.appendChild(div);
+                    const row = document.createElement('div');
+                    row.className = 'agg-row';
+                    row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+(Array.isArray(v) ? v[0]+' - '+v[1] : v)+'</span>';
+                    statsCol.appendChild(row);
                 });
 
-                const hr = document.createElement('div');
-                hr.style.marginTop = '8px';
-                hr.innerHTML = '<strong>Requirements:</strong>';
-                const ordered_req_keys = ['strength','intelligence','talent','agility'];
-                // level first if present
+                // Requirements column
+                const reqsCol = document.createElement('div');
+                reqsCol.className = 'agg-col';
+                const reqsTitle = document.createElement('div');
+                reqsTitle.className = 'agg-col-title';
+                reqsTitle.textContent = 'Requisitos';
+                reqsCol.appendChild(reqsTitle);
+
                 if(r.hasOwnProperty('level')){
-                    const v = r['level'];
-                    const div = document.createElement('div');
-                    div.textContent = 'level: ' + v;
-                    hr.appendChild(div);
+                    const row = document.createElement('div');
+                    row.className = 'agg-row';
+                    row.innerHTML = '<span class="agg-key">level</span><span class="agg-val">'+r['level']+'</span>';
+                    reqsCol.appendChild(row);
                 }
-                const reqOrder = [];
-                ordered_req_keys.forEach(k=>{ if(r.hasOwnProperty(k)) reqOrder.push(k); });
-                Object.keys(r).forEach(k=>{ if(k==='level') return; if(!reqOrder.includes(k)) reqOrder.push(k); });
-                reqOrder.forEach(k=>{
+                ['strength','intelligence','talent','agility'].forEach(k=>{
+                    if(!r.hasOwnProperty(k)) return;
                     const v = r[k];
-                    const div = document.createElement('div');
-                    if(Array.isArray(v)) div.textContent = k + ': ' + v[0] + ' - ' + v[1];
-                    else div.textContent = k + ': ' + v;
-                    hr.appendChild(div);
+                    const row = document.createElement('div');
+                    row.className = 'agg-row';
+                    row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+(Array.isArray(v) ? v[0]+' - '+v[1] : v)+'</span>';
+                    reqsCol.appendChild(row);
                 });
-                el.appendChild(hs);
-                el.appendChild(hr);
+
+                el.appendChild(statsCol);
+                el.appendChild(reqsCol);
             }).catch(err=>{ console.warn(err); });
         }
     </script>
