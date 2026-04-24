@@ -19,7 +19,7 @@ def index():
     
     # Define slots and their categories
     slots = [
-        {'name': 'Arma 2', 'categories': ['machados', 'garras', 'varinhas', 'foices', 'lancas', 'arcos', 'martelos', 'espadas']},
+        {'name': 'Arma', 'categories': ['machados', 'garras', 'varinhas', 'foices', 'lancas', 'arcos', 'martelos', 'espadas']},
         {'name': 'Armadura', 'categories': ['armaduras', 'roupoes']},
         # 'Arma 1' removed per request
         {'name': 'Escudo', 'categories': ['escudos', 'orbitais']},

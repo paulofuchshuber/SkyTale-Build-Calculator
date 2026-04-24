@@ -64,6 +64,7 @@ Os testes cobrem a lógica de agregação de stats e requisitos, aplicação de 
 ```
 ├── app.py                  # Aplicação Flask — rotas e carregamento dos itens
 ├── items.json              # Banco de dados de itens (17 categorias)
+├── statsBase.json          # Stats base de cada classe
 ├── requirements.txt
 ├── run_tests.py            # Runner de testes
 ├── download_assets.py      # Utilitário para baixar imagens do jogo
@@ -76,6 +77,13 @@ Os testes cobrem a lógica de agregação de stats e requisitos, aplicação de 
 └── assets/
     └── items/              # Imagens .bmp dos itens
 ```
+
+## Stats base por classe
+
+Os stats iniciais de cada classe estão em `statsBase.json`.
+A ordem dos atributos é: **Força, Inteligência, Talento, Agilidade, Vitalidade**.
+Disponível para as classes: **Mechanician, Fighter, Pikeman, Archer, Knight, Atalanta, Priestess, Mage**.
+O painel **Stats Finais** disponibiliza 585 pontos (equivalente à um personagem level 100) distribuíveis sobre esses valores base.
 
 ## Como funciona
 

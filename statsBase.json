@@ -1,0 +1,10 @@
+{
+  "Mechanician": {"strength": 24, "intelligence": 8,  "talent": 25, "agility": 18, "vitality": 24},
+  "Fighter":     {"strength": 28, "intelligence": 6,  "talent": 21, "agility": 17, "vitality": 27},
+  "Pikeman":     {"strength": 26, "intelligence": 9,  "talent": 20, "agility": 19, "vitality": 25},
+  "Archer":      {"strength": 17, "intelligence": 11, "talent": 21, "agility": 27, "vitality": 23},
+  "Knight":      {"strength": 26, "intelligence": 13, "talent": 17, "agility": 19, "vitality": 24},
+  "Atalanta":    {"strength": 23, "intelligence": 15, "talent": 19, "agility": 19, "vitality": 23},
+  "Priestress":  {"strength": 15, "intelligence": 28, "talent": 21, "agility": 15, "vitality": 20},
+  "Mage":        {"strength": 16, "intelligence": 29, "talent": 19, "agility": 14, "vitality": 21}
+}

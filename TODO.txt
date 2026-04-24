@@ -1,2 +1,12 @@
-- Aging no item
+- Aging na arma
 - Mix no item
+- Deixar status default aparecendo
+- Exibir bonus da arma
+- Refatorar, deixar as regras de negocio no backend
+  - Usar a 'saída' do slot para calcular o stats final
+- Pontos de stats base para cada classe + Distribuição de stats
+
+Melhorar documentação:
+- stats (aging, raridade), explicar regra do aging e regra da raridade
+- requisitos (spec)
+- pontos de stats base para cada classe

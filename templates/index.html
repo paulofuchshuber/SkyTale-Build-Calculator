@@ -300,6 +300,160 @@
             padding: 10px 0;
         }
 
+        /* ── STATS FINAIS PANEL ─────────────────── */
+        .sf-panel {
+            max-width: 820px;
+            margin: 18px auto 0;
+            background: var(--panel);
+            border: 1px solid var(--gold-dim);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 80px rgba(200,136,10,0.04);
+        }
+
+        .sf-body {
+            padding: 16px 22px;
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .sf-col {
+            flex: 1;
+            min-width: 180px;
+            padding: 0 18px 0 0;
+        }
+
+        .sf-col + .sf-col {
+            padding: 0 0 0 18px;
+            border-left: 1px solid rgba(200,136,10,0.12);
+        }
+
+        .sf-class-select { width: 100%; margin-bottom: 12px; }
+
+        .sf-stat-grid {
+            background: #060810;
+            border: 1px solid rgba(200,136,10,0.20);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .sf-stat-row {
+            display: grid;
+            grid-template-columns: 1fr 36px 20px 34px 34px;
+            align-items: center;
+            padding: 5px 10px;
+            gap: 7px;
+            border-bottom: 1px solid rgba(200,136,10,0.07);
+        }
+
+        .sf-stat-row:last-child { border-bottom: none; }
+
+        .sf-stat-name {
+            font-size: 12px;
+            color: var(--gold);
+            opacity: 0.9;
+        }
+
+        .sf-btn {
+            width: 20px;
+            height: 20px;
+            background: rgba(200,136,10,0.13);
+            border: 1px solid rgba(200,136,10,0.32);
+            border-radius: 3px;
+            color: var(--gold-lt);
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            padding: 0;
+            flex-shrink: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sf-btn:hover:not(:disabled) { background: rgba(200,136,10,0.28); }
+        .sf-btn:disabled { opacity: 0.22; cursor: default; }
+
+        .sf-btn-10 {
+            width: 100%;
+            padding: 0;
+            background: rgba(72,176,240,0.12);
+            border: 1px solid rgba(72,176,240,0.30);
+            border-radius: 3px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 600;
+            height: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sf-btn-10:hover:not(:disabled) { background: rgba(72,176,240,0.25); }
+        .sf-btn-10:disabled { opacity: 0.22; cursor: default; }
+
+        .sf-btn-max {
+            width: 100%;
+            padding: 0;
+            background: rgba(46,204,113,0.11);
+            border: 1px solid rgba(46,204,113,0.30);
+            border-radius: 3px;
+            color: #2ecc71;
+            font-size: 10px;
+            font-weight: 700;
+            height: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .sf-btn-max:hover:not(:disabled) { background: rgba(46,204,113,0.22); }
+        .sf-btn-max:disabled { opacity: 0.22; cursor: default; }
+
+        .sf-btn-reset {
+            width: 100%;
+            margin-top: 8px;
+            padding: 5px 0;
+            background: rgba(200,136,10,0.13);
+            border: 1px solid rgba(200,136,10,0.32);
+            border-radius: 4px;
+            color: var(--gold-lt);
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .sf-btn-reset:hover:not(:disabled) { background: rgba(200,136,10,0.28); }
+        .sf-btn-reset:disabled { opacity: 0.22; cursor: default; }
+
+        .sf-stat-val {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-hi);
+            min-width: 36px;
+            text-align: center;
+        }
+
+        .sf-stat-row--stats {
+            border-top: 1px solid rgba(200,136,10,0.18);
+            margin-top: 2px;
+        }
+
         /* ── SCROLLBAR ───────────────────────────── */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -386,10 +540,36 @@
         <div class="agg-panel">
             <div class="agg-header">
                 <div class="agg-header-bar"></div>
-                <h3>Stats Finais do Build</h3>
+                <h3>Stats Finais dos Itens</h3>
             </div>
             <div class="agg-body" id="aggregate-results">
-                <span class="agg-empty">Selecione itens para ver os stats combinados.</span>
+            </div>
+        </div>
+
+        <div class="sf-panel">
+            <div class="agg-header">
+                <div class="agg-header-bar"></div>
+                <h3>Stats Finais</h3>
+            </div>
+            <div class="sf-body">
+                <div class="sf-col">
+                    <select id="sf-class" class="sf-class-select" onchange="sfChangeClass()">
+                        <option value="">— selecione a classe —</option>
+                        <option value="Mechanician">Mechanician</option>
+                        <option value="Fighter">Fighter</option>
+                        <option value="Pikeman">Pikeman</option>
+                        <option value="Archer">Archer</option>
+                        <option value="Knight">Knight</option>
+                        <option value="Atalanta">Atalanta</option>
+                        <option value="Priestress">Priestress</option>
+                        <option value="Mage">Mage</option>
+                    </select>
+                    <div class="sf-stat-grid" id="sf-stat-grid"></div>
+                    <button class="sf-btn-reset" id="sf-reset-btn" onclick="sfReset()" disabled>Resetar</button>
+                </div>
+                <div class="sf-col">
+                    <!-- em breve -->
+                </div>
             </div>
         </div>
     </div>
@@ -659,13 +839,50 @@
             });
         }
 
-        window.addEventListener('DOMContentLoaded', ()=>{
-            document.querySelectorAll('[id^="slot-"]').forEach(slot=>{
-                const id = slot.id.split('-')[1];
-                changeRarity(id);
+        const STAT_KEYS = ['defense','absorption','block','hp','stamina','mana','attackPower','attackRating','critical'];
+        const REQ_KEYS  = ['level','strength','intelligence','talent','agility'];
+
+        function buildAggColumns(s, r){
+            const el = document.getElementById('aggregate-results');
+            el.innerHTML = '';
+
+            const statsCol = document.createElement('div');
+            statsCol.className = 'agg-col';
+            const statsTitle = document.createElement('div');
+            statsTitle.className = 'agg-col-title';
+            statsTitle.textContent = 'Atributos';
+            statsCol.appendChild(statsTitle);
+
+            const finalStatOrder = [...STAT_KEYS];
+            Object.keys(s).forEach(k=>{ if(!finalStatOrder.includes(k)) finalStatOrder.push(k); });
+            finalStatOrder.forEach(k=>{
+                const v = s[k];
+                const row = document.createElement('div');
+                row.className = 'agg-row';
+                const display = (v === undefined || v === null) ? '-' : (Array.isArray(v) ? v[0]+' - '+v[1] : v);
+                row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+display+'</span>';
+                statsCol.appendChild(row);
             });
-            updateAggregates();
-        });
+
+            const reqsCol = document.createElement('div');
+            reqsCol.className = 'agg-col';
+            const reqsTitle = document.createElement('div');
+            reqsTitle.className = 'agg-col-title';
+            reqsTitle.textContent = 'Requisitos';
+            reqsCol.appendChild(reqsTitle);
+
+            REQ_KEYS.forEach(k=>{
+                const v = r[k];
+                const row = document.createElement('div');
+                row.className = 'agg-row';
+                const display = (v === undefined || v === null) ? '-' : (Array.isArray(v) ? v[0]+' - '+v[1] : v);
+                row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+display+'</span>';
+                reqsCol.appendChild(row);
+            });
+
+            el.appendChild(statsCol);
+            el.appendChild(reqsCol);
+        }
 
         function updateAggregates(){
             const raw = [];
@@ -679,10 +896,8 @@
                 raw.push({ asset: s.value, rarity, spec, aging });
             });
 
-            const el = document.getElementById('aggregate-results');
-
             if(raw.length === 0){
-                el.innerHTML = '<span class="agg-empty">Selecione itens para ver os stats combinados.</span>';
+                buildAggColumns({}, {});
                 return;
             }
 
@@ -691,58 +906,111 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ assets: raw })
             }).then(r=>r.json()).then(data=>{
-                el.innerHTML = '';
                 if(!data) return;
-                const s = data.stats || {};
-                const r = data.requirements || {};
-
-                // Stats column
-                const statsCol = document.createElement('div');
-                statsCol.className = 'agg-col';
-                const statsTitle = document.createElement('div');
-                statsTitle.className = 'agg-col-title';
-                statsTitle.textContent = 'Atributos';
-                statsCol.appendChild(statsTitle);
-
-                const statOrder = ['defense','absorption','block','hp','stamina','mana','attackPower','attackRating','critical'];
-                const finalStatOrder = [];
-                statOrder.forEach(k=>{ if(s.hasOwnProperty(k)) finalStatOrder.push(k); });
-                Object.keys(s).forEach(k=>{ if(!finalStatOrder.includes(k)) finalStatOrder.push(k); });
-                finalStatOrder.forEach(k=>{
-                    const v = s[k];
-                    const row = document.createElement('div');
-                    row.className = 'agg-row';
-                    row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+(Array.isArray(v) ? v[0]+' - '+v[1] : v)+'</span>';
-                    statsCol.appendChild(row);
-                });
-
-                // Requirements column
-                const reqsCol = document.createElement('div');
-                reqsCol.className = 'agg-col';
-                const reqsTitle = document.createElement('div');
-                reqsTitle.className = 'agg-col-title';
-                reqsTitle.textContent = 'Requisitos';
-                reqsCol.appendChild(reqsTitle);
-
-                if(r.hasOwnProperty('level')){
-                    const row = document.createElement('div');
-                    row.className = 'agg-row';
-                    row.innerHTML = '<span class="agg-key">level</span><span class="agg-val">'+r['level']+'</span>';
-                    reqsCol.appendChild(row);
-                }
-                ['strength','intelligence','talent','agility'].forEach(k=>{
-                    if(!r.hasOwnProperty(k)) return;
-                    const v = r[k];
-                    const row = document.createElement('div');
-                    row.className = 'agg-row';
-                    row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+(Array.isArray(v) ? v[0]+' - '+v[1] : v)+'</span>';
-                    reqsCol.appendChild(row);
-                });
-
-                el.appendChild(statsCol);
-                el.appendChild(reqsCol);
+                buildAggColumns(data.stats || {}, data.requirements || {});
             }).catch(err=>{ console.warn(err); });
         }
+
+        /* ── STATS FINAIS ─────────────────────── */
+        const STATS_BASE = {
+            Mechanician: {strength:24, intelligence:8,  talent:25, agility:18, vitality:24},
+            Fighter:     {strength:28, intelligence:6,  talent:21, agility:17, vitality:27},
+            Pikeman:     {strength:26, intelligence:9,  talent:20, agility:19, vitality:25},
+            Archer:      {strength:17, intelligence:11, talent:21, agility:27, vitality:23},
+            Knight:      {strength:26, intelligence:13, talent:17, agility:19, vitality:24},
+            Atalanta:    {strength:23, intelligence:15, talent:19, agility:19, vitality:23},
+            Priestress:  {strength:15, intelligence:28, talent:21, agility:15, vitality:20},
+            Mage:        {strength:16, intelligence:29, talent:19, agility:14, vitality:21}
+        };
+
+        const SF_TOTAL  = 585;
+        const SF_KEYS   = ['strength','intelligence','talent','agility','vitality'];
+        const SF_LABELS = {strength:'Força', intelligence:'Inteligência', talent:'Talento', agility:'Agilidade', vitality:'Vitalidade'};
+
+        let sfCurrent = null;
+
+        function sfRemaining(){
+            if(!sfCurrent) return null;
+            const base = STATS_BASE[document.getElementById('sf-class').value] || {};
+            let used = 0;
+            SF_KEYS.forEach(k=>{ used += (sfCurrent[k]||0) - (base[k]||0); });
+            return SF_TOTAL - used;
+        }
+
+        function sfChangeClass(){
+            const cls = document.getElementById('sf-class').value;
+            sfCurrent = cls ? { ...STATS_BASE[cls] } : null;
+            document.getElementById('sf-reset-btn').disabled = !sfCurrent;
+            sfRenderGrid();
+        }
+
+        function sfAdjust(stat, delta){
+            if(!sfCurrent) return;
+            const remaining = sfRemaining();
+            if(remaining <= 0) return;
+            sfCurrent[stat] += Math.min(delta, remaining);
+            sfUpdateDisplay();
+        }
+
+        function sfReset(){
+            const cls = document.getElementById('sf-class').value;
+            if(!cls) return;
+            sfCurrent = { ...STATS_BASE[cls] };
+            sfUpdateDisplay();
+        }
+
+        function sfRenderGrid(){
+            const grid = document.getElementById('sf-stat-grid');
+            grid.innerHTML = '';
+            const dis = sfCurrent ? '' : 'disabled';
+            SF_KEYS.forEach(k=>{
+                const row = document.createElement('div');
+                row.className = 'sf-stat-row';
+                const val = sfCurrent ? sfCurrent[k] : '';
+                row.innerHTML =
+                    '<span class="sf-stat-name">'+SF_LABELS[k]+'</span>'+
+                    '<span class="sf-stat-val" id="sf-val-'+k+'">'+val+'</span>'+
+                    '<button class="sf-btn" id="sf-plus-'+k+'" onclick="sfAdjust(\''+k+'\',1)" '+dis+'>+</button>'+
+                    '<button class="sf-btn-10" id="sf-plus10-'+k+'" onclick="sfAdjust(\''+k+'\',10)" '+dis+'>+10</button>'+
+                    '<button class="sf-btn-max" id="sf-max-'+k+'" onclick="sfMax(\''+k+'\')" '+dis+'>Max</button>';
+                grid.appendChild(row);
+            });
+            const statsRow = document.createElement('div');
+            statsRow.className = 'sf-stat-row sf-stat-row--stats';
+            statsRow.innerHTML =
+                '<span class="sf-stat-name">Stats</span>'+
+                '<span class="sf-stat-val" id="sf-remaining">'+(sfCurrent ? SF_TOTAL : '')+'</span>';
+            grid.appendChild(statsRow);
+        }
+
+        function sfMax(stat){
+            if(!sfCurrent) return;
+            const remaining = sfRemaining();
+            if(remaining <= 0) return;
+            sfCurrent[stat] += remaining;
+            sfUpdateDisplay();
+        }
+
+        function sfUpdateDisplay(){
+            if(!sfCurrent) return;
+            const remaining = sfRemaining();
+            SF_KEYS.forEach(k=>{
+                document.getElementById('sf-val-'+k).textContent   = sfCurrent[k];
+                document.getElementById('sf-plus-'+k).disabled     = remaining <= 0;
+                document.getElementById('sf-plus10-'+k).disabled   = remaining <= 0;
+                document.getElementById('sf-max-'+k).disabled      = remaining <= 0;
+            });
+            document.getElementById('sf-remaining').textContent = remaining;
+        }
+
+        window.addEventListener('DOMContentLoaded', ()=>{
+            document.querySelectorAll('[id^="slot-"]').forEach(slot=>{
+                const id = slot.id.split('-')[1];
+                changeRarity(id);
+            });
+            updateAggregates();
+            sfRenderGrid();
+        });
     </script>
 </body>
 </html>
