@@ -103,7 +103,38 @@ def _accumulate_stat_dict(src_dict, stats_acc):
         stats_acc[k][1] += float(mx)
 
 
-def aggregate_by_assets(selected_items, selected_class=None):
+def _resolve_lvl_bonuses(bonus_dict, level):
+    """Convert attackPower/attackRating spec bonuses to level-based ranges.
+
+    Divisor stored in bonus_dict (e.g. attackRating=1, attackRating_max=3) means:
+      actual_min = floor(level / max_divisor), actual_max = floor(level / min_divisor).
+    Single-value (e.g. attackPower=9) maps to floor(level/9) for both min and max.
+    """
+    import math
+    result = dict(bonus_dict)
+    level = max(1, int(level or 1))
+    for k in ['attackPower', 'attackRating']:
+        if k not in result:
+            continue
+        val = result[k]
+        if not isinstance(val, (int, float)):
+            continue
+        companion = k + '_max'
+        if companion in result and isinstance(result[companion], (int, float)):
+            d_min = int(val)
+            d_max = int(result[companion])
+            actual_min = math.floor(level / d_max) if d_max else 0
+            actual_max = math.floor(level / d_min) if d_min else 0
+            result[k] = {'min': {'min': float(actual_min)}, 'max': {'min': float(actual_max)}}
+            del result[companion]
+        else:
+            d = int(val)
+            actual = math.floor(level / d) if d else 0
+            result[k] = {'min': {'min': float(actual)}, 'max': {'min': float(actual)}}
+    return result
+
+
+def aggregate_by_assets(selected_items, selected_class=None, level=100):
     # selected_items: list of item dicts
     # aggregate stats: sum of mins and sum of maxs per stat key
     stats_acc = {}
@@ -122,7 +153,8 @@ def aggregate_by_assets(selected_items, selected_class=None):
         item_slot_spec = item.get('_spec')
         if selected_class and selected_class in primary:
             if not item_slot_spec or item_slot_spec == selected_class:
-                _accumulate_stat_dict(item_spec_data.get('bonuses') or {}, stats_acc)
+                bonuses = _resolve_lvl_bonuses(item_spec_data.get('bonuses') or {}, level)
+                _accumulate_stat_dict(bonuses, stats_acc)
 
         req = item.get('requirements', {}) or {}
         for k in req_keys:

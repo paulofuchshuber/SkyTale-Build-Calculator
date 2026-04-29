@@ -520,7 +520,7 @@
     </header>
 
     <div class="main">
-        <p class="page-label">Monte seu build — analise atributos e requisitos</p>
+        <p class="page-label">Monte sua build</p>
 
         <div class="slots">
         {% for slot in slots %}
@@ -748,6 +748,9 @@
                     display = (mn === mx) ? String(mn) : mn + ' - ' + mx;
                 } else {
                     display = String(bonuses[k]);
+                }
+                if (k === 'attackPower' || k === 'attackRating') {
+                    display = display.replace(/(\d+)/g, 'lvl/$1');
                 }
                 const el = document.createElement('div');
                 el.className = 'stat-row';
@@ -1004,10 +1007,11 @@
             }
 
             const selectedClass = document.getElementById('sf-class').value || '';
+            const level = parseInt(document.getElementById('sf-level').value, 10) || 100;
             fetch('/aggregate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ assets: raw, selected_class: selectedClass })
+                body: JSON.stringify({ assets: raw, selected_class: selectedClass, level: level })
             }).then(r=>r.json()).then(data=>{
                 if(!data) return;
                 buildAggColumns(data.stats || {}, data.requirements || {});
@@ -1057,6 +1061,7 @@
             else if (v > 105)      v = 105;
             el.value = v;
             sfUpdateDisplay();
+            updateAggregates();
         }
 
         function sfLevelStep(delta){
@@ -1064,6 +1069,7 @@
             const v = Math.max(1, Math.min(105, (parseInt(el.value, 10) || 100) + delta));
             el.value = v;
             sfUpdateDisplay();
+            updateAggregates();
         }
 
         function sfChangeLevel(){

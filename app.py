@@ -103,7 +103,11 @@ def aggregate():
             selected.append(apply_rarity_and_spec(base, rarity=rarity, spec=spec, aging=aging))
 
     selected_class = data.get('selected_class') or None
-    result = aggregate_by_assets(selected, selected_class=selected_class)
+    try:
+        level = max(1, min(105, int(data.get('level', 100) or 100)))
+    except Exception:
+        level = 100
+    result = aggregate_by_assets(selected, selected_class=selected_class, level=level)
     return jsonify(result)
 
 if __name__ == '__main__':

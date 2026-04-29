@@ -473,3 +473,79 @@ def test_bonus_two_items_spec_only_one_matches_class():
     ], selected_class='Fighter')
     # armor: 100+10=110; shield: 50 (sem bônus) → total 160
     assert out['stats']['defense'] == 160
+
+
+# ─── Feature: Bônus lvl/N (attackPower e attackRating baseados em level) ──────
+
+def make_lvl_item(cat, stats, ap_div=None, ar_min_div=None, ar_max_div=None, primary='Fighter'):
+    bonuses = {}
+    if ap_div is not None:        bonuses['attackPower'] = ap_div
+    if ar_min_div is not None:    bonuses['attackRating'] = ar_min_div
+    if ar_max_div is not None:    bonuses['attackRating_max'] = ar_max_div
+    return {'_category': cat, 'stats': stats, 'requirements': {},
+            'spec': {'bonuses': bonuses, 'primaryClass': primary}}
+
+def test_lvl_bonus_attackpower_single_divisor():
+    # attackPower lvl/9 a level 99 → floor(99/9) = 11
+    item = make_lvl_item('espadas', {}, ap_div=9)
+    out = aggregate_by_assets([item], selected_class='Fighter', level=99)
+    assert out['stats']['attackPower'] == 11
+
+def test_lvl_bonus_attackpower_floor_division():
+    # attackPower lvl/7 a level 99 → floor(99/7) = 14 (não 15)
+    item = make_lvl_item('espadas', {}, ap_div=7)
+    out = aggregate_by_assets([item], selected_class='Fighter', level=99)
+    assert out['stats']['attackPower'] == 14
+
+def test_lvl_bonus_attackrating_range():
+    # attackRating lvl/1 - lvl/3 a level 99 → min=floor(99/3)=33, max=floor(99/1)=99
+    item = make_lvl_item('espadas', {}, ar_min_div=1, ar_max_div=3)
+    out = aggregate_by_assets([item], selected_class='Fighter', level=99)
+    assert out['stats']['attackRating'] == [33, 99]
+
+def test_lvl_bonus_attackpower_added_to_base_stats():
+    # base attackPower [80, 120] + lvl/7 a level 99 → [80+14, 120+14] = [94, 134]
+    item = make_lvl_item('espadas', {'attackPower': nested(80, 120)}, ap_div=7)
+    out = aggregate_by_assets([item], selected_class='Fighter', level=99)
+    assert out['stats']['attackPower'] == [94, 134]
+
+def test_lvl_bonus_attackrating_added_to_base_stats():
+    # base attackRating [30, 40] + lvl/1 - lvl/3 a level 99 → [30+33, 40+99] = [63, 139]
+    item = make_lvl_item('espadas', {'attackRating': nested(30, 40)}, ar_min_div=1, ar_max_div=3)
+    out = aggregate_by_assets([item], selected_class='Fighter', level=99)
+    assert out['stats']['attackRating'] == [63, 139]
+
+def test_lvl_bonus_class_no_match_not_applied():
+    # classe errada → bônus lvl não é aplicado
+    item = make_lvl_item('espadas', {'attackPower': nested(80, 120)}, ap_div=9)
+    out = aggregate_by_assets([item], selected_class='Mage', level=99)
+    assert out['stats']['attackPower'] == [80, 120]
+
+def test_lvl_bonus_default_level_100():
+    # level omitido → padrão 100; attackPower=5 → floor(100/5) = 20
+    item = make_lvl_item('espadas', {}, ap_div=5)
+    out = aggregate_by_assets([item], selected_class='Fighter')
+    assert out['stats']['attackPower'] == 20
+
+def test_lvl_bonus_level_variation():
+    # attackRating lvl/1 - lvl/3 a level 60 → min=floor(60/3)=20, max=floor(60/1)=60
+    item = make_lvl_item('espadas', {}, ar_min_div=1, ar_max_div=3)
+    out = aggregate_by_assets([item], selected_class='Fighter', level=60)
+    assert out['stats']['attackRating'] == [20, 60]
+
+def test_lvl_bonus_two_items_summed():
+    # dois itens com lvl bonus: ap_div=9 + ap_div=3, level=99 → 11 + 33 = 44
+    a = make_lvl_item('espadas',   {}, ap_div=9)
+    b = make_lvl_item('machados',  {}, ap_div=3)
+    out = aggregate_by_assets([a, b], selected_class='Fighter', level=99)
+    assert out['stats']['attackPower'] == 44
+
+def test_lvl_bonus_dict_format_unaffected():
+    # bônus já em formato dict (não int) → _resolve_lvl_bonuses não altera
+    item = make_item_with_bonus(
+        'espadas', {'attackPower': nested(80, 100)}, {},
+        {'attackPower': {'min': {'min': 4.0}, 'max': {'min': 4.0}}},
+        'Fighter',
+    )
+    out = aggregate_by_assets([item], selected_class='Fighter', level=99)
+    assert out['stats']['attackPower'] == [84, 104]
