@@ -102,7 +102,8 @@ def aggregate():
                 aging = 0
             selected.append(apply_rarity_and_spec(base, rarity=rarity, spec=spec, aging=aging))
 
-    result = aggregate_by_assets(selected)
+    selected_class = data.get('selected_class') or None
+    result = aggregate_by_assets(selected, selected_class=selected_class)
     return jsonify(result)
 
 if __name__ == '__main__':

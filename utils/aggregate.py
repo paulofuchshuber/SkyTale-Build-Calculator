@@ -1,3 +1,24 @@
+def calc_stat_points(lvl):
+    """Distributable stat points earned by leveling (excludes the 99 base points).
+
+    Rates: +5/level up to 79, +7/level for 80-89, +10/level from 90+.
+    One-time bonuses: +5 at levels 30, 70, and 80.
+    Level 1 = 0, level 100 = 585, level 150 = 1085.
+    """
+    lvl = max(1, min(150, int(lvl)))
+    n5  = max(0, min(lvl, 79) - 1)   # level-ups at +5 (levels 2-79)
+    n7  = max(0, min(lvl, 89) - 79)  # level-ups at +7 (levels 80-89)
+    n10 = max(0, lvl - 89)            # level-ups at +10 (levels 90+)
+    points = n5 * 5 + n7 * 7 + n10 * 10
+    if lvl >= 30:
+        points += 5
+    if lvl >= 70:
+        points += 5
+    if lvl >= 80:
+        points += 5
+    return points
+
+
 def _extract_min_max(val):
     # return tuple (min, max) or None. Preserve numeric types (int/float).
     if val is None:
@@ -58,7 +79,31 @@ def _extract_min_max(val):
     return None
 
 
-def aggregate_by_assets(selected_items):
+def _accumulate_stat_dict(src_dict, stats_acc):
+    """Add all stat entries from src_dict into stats_acc (in-place)."""
+    processed = set()
+    for k in list(src_dict.keys()):
+        if k in processed:
+            continue
+        if k.endswith('_max'):
+            continue
+        companion = k + '_max'
+        if companion in src_dict and isinstance(src_dict[k], (int, float)) and isinstance(src_dict[companion], (int, float)):
+            mn = float(src_dict[k])
+            mx = float(src_dict[companion])
+            processed.add(companion)
+        else:
+            rng = _extract_min_max(src_dict[k])
+            if rng is None:
+                continue
+            mn, mx = rng
+        if k not in stats_acc:
+            stats_acc[k] = [0.0, 0.0]
+        stats_acc[k][0] += float(mn)
+        stats_acc[k][1] += float(mx)
+
+
+def aggregate_by_assets(selected_items, selected_class=None):
     # selected_items: list of item dicts
     # aggregate stats: sum of mins and sum of maxs per stat key
     stats_acc = {}
@@ -68,29 +113,16 @@ def aggregate_by_assets(selected_items):
 
     for item in selected_items:
         st = item.get('stats', {}) or {}
-        # handle paired keys like 'absorption' + 'absorption_max' or 'attackRating' + 'attackRating_max'
-        processed = set()
-        for k in list(st.keys()):
-            if k in processed:
-                continue
-            # skip keys that are *_max by themselves
-            if k.endswith('_max'):
-                continue
-            companion = k + '_max'
-            if companion in st and isinstance(st[k], (int, float)) and isinstance(st[companion], (int, float)):
-                mn = float(st[k])
-                mx = float(st[companion])
-                processed.add(companion)
-            else:
-                rng = _extract_min_max(st[k])
-                if rng is None:
-                    continue
-                mn, mx = rng
-            # accumulate as floats when necessary
-            if k not in stats_acc:
-                stats_acc[k] = [0.0, 0.0]
-            stats_acc[k][0] += float(mn)
-            stats_acc[k][1] += float(mx)
+        _accumulate_stat_dict(st, stats_acc)
+
+        # bonus: include spec.bonuses when selected_class matches spec.primaryClass
+        # AND the per-slot spec (_spec) also matches selected_class (or no spec was chosen)
+        item_spec_data = item.get('spec') or {}
+        primary = (item_spec_data.get('primaryClass') or '').split()
+        item_slot_spec = item.get('_spec')
+        if selected_class and selected_class in primary:
+            if not item_slot_spec or item_slot_spec == selected_class:
+                _accumulate_stat_dict(item_spec_data.get('bonuses') or {}, stats_acc)
 
         req = item.get('requirements', {}) or {}
         for k in req_keys:
@@ -261,6 +293,7 @@ def apply_rarity_and_spec(item, rarity='normal', spec=None, aging=0):
     # spec may be passed in via function argument - attempt to read it from itm['_spec'] or from a parameter
     # (we expect caller to supply spec parameter when needed). We'll check `itm.get('_spec')` first.
     spec_to_apply = spec or (itm.get('_spec') if isinstance(itm, dict) else None)
+    itm['_spec'] = spec_to_apply
     if spec_to_apply and spec_to_apply in SPEC_MODS:
         mods = SPEC_MODS[spec_to_apply]
         for k in ['level','strength','intelligence','talent','agility']:

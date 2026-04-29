@@ -1,5 +1,4 @@
 - ANUNCIO
-- script para remover items level 100+
 - script para adicionar items no .json
 - ajuste de level para pontos de stats
 - inverter coluna atributos e requisitos
@@ -7,10 +6,9 @@
 - Mix no item
 - Deixar status default aparecendo
 - Exibir bonus da arma
+- informacoes de aneis, amuletos e escudos.
 - Refatorar, deixar as regras de negocio no backend
   - Usar a 'saída' do slot para calcular o stats final
-- Pontos de stats base para cada classe + Distribuição de stats + Reset (seguir layout do game)
-- informacoes de aneis, amuletos e escudos.
 
 Melhorar documentação:
 - stats (aging, raridade), explicar regra do aging e regra da raridade
