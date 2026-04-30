@@ -307,8 +307,14 @@ def apply_rarity_and_spec(item, rarity='normal', spec=None, aging=0):
         if isShield: absBonus=3
         if isBracelet: atkRatingBonus=30
 
-    # helper to add bonus to a numeric range (min,max)
     def add_bonus_to_range(src, add):
+        quad = _extract_quad(src)
+        if quad is not None:
+            a, b, c, d = quad
+            return {
+                'min': {'min': float(a + add), 'max': float(b + add)},
+                'max': {'min': float(c + add), 'max': float(d + add)}
+            }
         rng = _extract_min_max(src)
         if rng is None:
             return src
@@ -333,9 +339,14 @@ def apply_rarity_and_spec(item, rarity='normal', spec=None, aging=0):
     # attackPower
     if atkPowerBonus and 'attackPower' in stats:
         stats['attackPower'] = add_bonus_to_range(stats['attackPower'], atkPowerBonus)
-    # attackRating
+    # attackRating — stored as flat companion pair (int + attackRating_max); preserve that shape
     if atkRatingBonus and 'attackRating' in stats:
-        stats['attackRating'] = add_bonus_to_range(stats['attackRating'], atkRatingBonus)
+        if isinstance(stats['attackRating'], (int, float)):
+            stats['attackRating'] = float(stats['attackRating']) + atkRatingBonus
+            if 'attackRating_max' in stats and isinstance(stats['attackRating_max'], (int, float)):
+                stats['attackRating_max'] = float(stats['attackRating_max']) + atkRatingBonus
+        else:
+            stats['attackRating'] = add_bonus_to_range(stats['attackRating'], atkRatingBonus)
 
     itm['stats'] = stats
 

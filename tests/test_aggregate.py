@@ -598,3 +598,54 @@ def test_attackpower_quad_collapses_when_no_spread():
     item = make_item('espadas', stats={'attackPower': quad_ap(30, 30, 60, 60)})
     out = aggregate_by_assets([item])
     assert out['stats']['attackPower'] == [30, 60]
+
+
+# ─── Rarity: attackPower quad preserva n(n)-n(n) após bônus ──────────────────
+
+def test_weapon_rare_attackpower_quad_rarity():
+    sword = make_item('espadas', stats={'attackPower': quad_ap(29, 32, 49, 51)})
+    out = agg1(sword, rarity='rare')
+    assert out['stats']['attackPower'] == [33, 36, 53, 55]
+
+def test_weapon_epic_attackpower_quad_rarity():
+    sword = make_item('espadas', stats={'attackPower': quad_ap(29, 32, 49, 51)})
+    out = agg1(sword, rarity='epic')
+    assert out['stats']['attackPower'] == [37, 40, 57, 59]
+
+def test_weapon_legendary_attackpower_quad_rarity():
+    sword = make_item('espadas', stats={'attackPower': quad_ap(29, 32, 49, 51)})
+    out = agg1(sword, rarity='legendary')
+    assert out['stats']['attackPower'] == [41, 44, 61, 63]
+
+
+# ─── Rarity: attackRating par plano preserva min-max após bônus ──────────────
+
+def test_weapon_rare_attackrating_flat_pair():
+    sword = make_item('espadas', stats={'attackRating': 30, 'attackRating_max': 38})
+    out = agg1(sword, rarity='rare')
+    assert out['stats']['attackRating'] == [40, 48]
+
+def test_weapon_epic_attackrating_flat_pair():
+    sword = make_item('espadas', stats={'attackRating': 30, 'attackRating_max': 38})
+    out = agg1(sword, rarity='epic')
+    assert out['stats']['attackRating'] == [50, 58]
+
+def test_weapon_legendary_attackrating_flat_pair():
+    sword = make_item('espadas', stats={'attackRating': 30, 'attackRating_max': 38})
+    out = agg1(sword, rarity='legendary')
+    assert out['stats']['attackRating'] == [60, 68]
+
+def test_weapon_normal_attackrating_flat_pair_unchanged():
+    sword = make_item('espadas', stats={'attackRating': 30, 'attackRating_max': 38})
+    out = agg1(sword, rarity='normal')
+    assert out['stats']['attackRating'] == [30, 38]
+
+def test_weapon_rare_attackrating_and_attackpower_quad_together():
+    # ambos num mesmo item com raridade
+    sword = make_item('espadas', stats={
+        'attackPower': quad_ap(29, 32, 49, 51),
+        'attackRating': 30, 'attackRating_max': 38,
+    })
+    out = agg1(sword, rarity='rare')
+    assert out['stats']['attackPower'] == [33, 36, 53, 55]
+    assert out['stats']['attackRating'] == [40, 48]
