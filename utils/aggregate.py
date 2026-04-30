@@ -79,8 +79,29 @@ def _extract_min_max(val):
     return None
 
 
+def _extract_quad(val):
+    """Return (min_min, min_max, max_min, max_max) for the 4-value nested structure
+    {'min': {'min': A, 'max': B}, 'max': {'min': C, 'max': D}}, or None if not that shape."""
+    if not isinstance(val, dict):
+        return None
+    m = val.get('min')
+    M = val.get('max')
+    if not (isinstance(m, dict) and isinstance(M, dict)):
+        return None
+    if not ('min' in m and 'max' in m and 'min' in M and 'max' in M):
+        return None
+    try:
+        return (float(m['min']), float(m['max']), float(M['min']), float(M['max']))
+    except (TypeError, ValueError):
+        return None
+
+
 def _accumulate_stat_dict(src_dict, stats_acc):
-    """Add all stat entries from src_dict into stats_acc (in-place)."""
+    """Add all stat entries from src_dict into stats_acc (in-place).
+
+    stats_acc[k] is a 4-element list [min_min, min_max, max_min, max_max].
+    Simple (non-quad) stats contribute with min_min==min_max and max_min==max_max.
+    """
     processed = set()
     for k in list(src_dict.keys()):
         if k in processed:
@@ -92,15 +113,32 @@ def _accumulate_stat_dict(src_dict, stats_acc):
             mn = float(src_dict[k])
             mx = float(src_dict[companion])
             processed.add(companion)
+            if k not in stats_acc:
+                stats_acc[k] = [0.0, 0.0, 0.0, 0.0]
+            stats_acc[k][0] += mn
+            stats_acc[k][1] += mn
+            stats_acc[k][2] += mx
+            stats_acc[k][3] += mx
         else:
-            rng = _extract_min_max(src_dict[k])
-            if rng is None:
-                continue
-            mn, mx = rng
-        if k not in stats_acc:
-            stats_acc[k] = [0.0, 0.0]
-        stats_acc[k][0] += float(mn)
-        stats_acc[k][1] += float(mx)
+            quad = _extract_quad(src_dict[k])
+            if quad is not None:
+                if k not in stats_acc:
+                    stats_acc[k] = [0.0, 0.0, 0.0, 0.0]
+                stats_acc[k][0] += quad[0]
+                stats_acc[k][1] += quad[1]
+                stats_acc[k][2] += quad[2]
+                stats_acc[k][3] += quad[3]
+            else:
+                rng = _extract_min_max(src_dict[k])
+                if rng is None:
+                    continue
+                mn, mx = rng
+                if k not in stats_acc:
+                    stats_acc[k] = [0.0, 0.0, 0.0, 0.0]
+                stats_acc[k][0] += float(mn)
+                stats_acc[k][1] += float(mn)
+                stats_acc[k][2] += float(mx)
+                stats_acc[k][3] += float(mx)
 
 
 def _resolve_lvl_bonuses(bonus_dict, level):
@@ -167,27 +205,24 @@ def aggregate_by_assets(selected_items, selected_class=None, level=100):
                 elif isinstance(val, (int, float)):
                     req_ranges[k].append((val, val))
 
-    # build stats result: if min==max show single int/float, else list
+    def _fi(x):
+        return int(x) if abs(x - int(x)) < 1e-9 else round(x, 1)
+
+    # build stats result
     stats_out = {}
-    for k, (smin, smax) in stats_acc.items():
-        # don't expose keys with '_max'
+    for k, q in stats_acc.items():
         if k.endswith('_max'):
             continue
-        # if both are integers (no fractional part), return ints; else round absorption-like to 1 decimal
-        def is_intish(x):
-            return abs(x - int(x)) < 1e-9
-
-        if abs(smin - smax) < 1e-9:
-            # single value
-            if is_intish(smin):
-                stats_out[k] = int(smin)
+        a, b, c, d = _fi(q[0]), _fi(q[1]), _fi(q[2]), _fi(q[3])
+        if a == b and c == d:
+            # simple (no quad spread): collapse to 1 or 2 values
+            if a == c:
+                stats_out[k] = a
             else:
-                stats_out[k] = round(smin, 1)
+                stats_out[k] = [a, c]
         else:
-            if is_intish(smin) and is_intish(smax):
-                stats_out[k] = [int(smin), int(smax)]
-            else:
-                stats_out[k] = [round(smin, 1), round(smax, 1)]
+            # quad: return all 4 values
+            stats_out[k] = [a, b, c, d]
 
     # build requirements result: for each key, if any ranges exist, result_min = max(mins), result_max = max(maxs)
     req_out = {}

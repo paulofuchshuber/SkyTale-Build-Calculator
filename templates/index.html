@@ -556,14 +556,6 @@
                 <label class="field-label">Spec</label>
                 <select id="spec-{{ loop.index0 }}" onchange="changeSpec({{ loop.index0 }})">
                     <option value="">No spec</option>
-                    <option value="Mechanician">Mechanician</option>
-                    <option value="Fighter">Fighter</option>
-                    <option value="Pikeman">Pikeman</option>
-                    <option value="Archer">Archer</option>
-                    <option value="Knight">Knight</option>
-                    <option value="Atalanta">Atalanta</option>
-                    <option value="Priestess">Priestess</option>
-                    <option value="Mage">Mage</option>
                 </select>
 
                 {% if slot.name in ['Armadura', 'Escudo'] %}
@@ -667,6 +659,25 @@
             Mage:        {strength: {min:-0.25, max:-0.20}, intelligence: {min:0.15, max:0.25}, talent: {min:-0.15, max:-0.10}, agility: {min:-0.20, max:-0.15}}
         };
 
+        const ALL_SPECS = ['Mechanician','Fighter','Pikeman','Archer','Knight','Atalanta','Priestess','Mage'];
+
+        function updateSpecOptions(idx, item){
+            const sel = document.getElementById('spec-'+idx);
+            const current = sel.value;
+            const allowed = item && item.spec && item.spec.primaryClass
+                ? item.spec.primaryClass.split(' ')
+                : ALL_SPECS;
+            sel.innerHTML = '<option value="">No spec</option>';
+            allowed.forEach(cls => {
+                const opt = document.createElement('option');
+                opt.value = cls;
+                opt.textContent = cls;
+                if(cls === current) opt.selected = true;
+                sel.appendChild(opt);
+            });
+            if(!allowed.includes(current)) sel.value = '';
+        }
+
         function updateImage(idx){
             const s = document.getElementById('select-'+idx);
             const i = document.getElementById('img-'+idx);
@@ -676,12 +687,14 @@
                 i.src = val;
                 i.style.display = 'block';
                 ph.style.display = 'none';
+                updateSpecOptions(idx, ITEMS[val]);
                 renderAll(idx, ITEMS[val]);
                 updateAggregates();
             } else {
                 i.src = '';
                 i.style.display = 'none';
                 ph.style.display = 'block';
+                updateSpecOptions(idx, null);
                 document.getElementById('stats-'+idx).innerHTML = '';
                 document.getElementById('reqs-'+idx).innerHTML = '';
                 document.getElementById('bonus-'+idx).innerHTML = '';
@@ -947,6 +960,19 @@
         const STAT_KEYS = ['defense','absorption','block','hp','stamina','mana','attackPower','attackRating','critical'];
         const REQ_KEYS  = ['level','strength','intelligence','talent','agility'];
 
+        function fmtStat(v) {
+            if (v === undefined || v === null) return '-';
+            if (Array.isArray(v)) {
+                if (v.length === 4) {
+                    const left  = v[0] === v[1] ? String(v[0]) : v[0]+'('+v[1]+')';
+                    const right = v[2] === v[3] ? String(v[3]) : v[2]+'('+v[3]+')';
+                    return left + ' - ' + right;
+                }
+                return v[0]+' - '+v[1];
+            }
+            return String(v);
+        }
+
         function buildAggColumns(s, r){
             const el = document.getElementById('aggregate-results');
             el.innerHTML = '';
@@ -964,8 +990,7 @@
                 const v = s[k];
                 const row = document.createElement('div');
                 row.className = 'agg-row';
-                const display = (v === undefined || v === null) ? '-' : (Array.isArray(v) ? v[0]+' - '+v[1] : v);
-                row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+display+'</span>';
+                row.innerHTML = '<span class="agg-key">'+k+'</span><span class="agg-val">'+fmtStat(v)+'</span>';
                 statsCol.appendChild(row);
             });
 

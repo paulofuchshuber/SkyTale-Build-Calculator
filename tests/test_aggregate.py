@@ -549,3 +549,52 @@ def test_lvl_bonus_dict_format_unaffected():
     )
     out = aggregate_by_assets([item], selected_class='Fighter', level=99)
     assert out['stats']['attackPower'] == [84, 104]
+
+
+# ─── Feature: attackPower formato quad (4 valores) ───────────────────────────
+
+def quad_ap(mn_mn, mn_mx, mx_mn, mx_mx):
+    return {'min': {'min': mn_mn, 'max': mn_mx}, 'max': {'min': mx_mn, 'max': mx_mx}}
+
+def test_attackpower_quad_preserved_single_item():
+    # estrutura quad é preservada no aggregate → lista de 4 valores
+    item = make_item('espadas', stats={'attackPower': quad_ap(29, 32, 49, 51)})
+    out = aggregate_by_assets([item])
+    assert out['stats']['attackPower'] == [29, 32, 49, 51]
+
+def test_attackpower_quad_plus_flat_spec_bonus():
+    # base quad + bônus spec flat quad (todos iguais) → spread preservado da base
+    item = make_item_with_bonus(
+        'machados',
+        {'attackPower': quad_ap(29, 32, 49, 51)},
+        {},
+        {'attackPower': {'min': {'min': 7, 'max': 7}, 'max': {'min': 7, 'max': 7}}},
+        'Mechanician',
+    )
+    out = aggregate_by_assets([item], selected_class='Mechanician')
+    assert out['stats']['attackPower'] == [36, 39, 56, 58]
+
+def test_attackpower_quad_two_items_summed():
+    # soma de dois itens quad → soma de cada sub-valor
+    a = make_item('espadas',  stats={'attackPower': quad_ap(10, 12, 20, 22)})
+    b = make_item('machados', stats={'attackPower': quad_ap(5,  6,  10, 11)})
+    out = aggregate_by_assets([a, b])
+    assert out['stats']['attackPower'] == [15, 18, 30, 33]
+
+def test_attackpower_simple_nested_stays_2val():
+    # nested simples (sem sub-max) → continua como lista de 2 valores
+    item = make_item('espadas', stats={'attackPower': nested(100, 150)})
+    out = aggregate_by_assets([item])
+    assert out['stats']['attackPower'] == [100, 150]
+
+def test_attackpower_quad_collapses_when_all_equal():
+    # quad onde todos os sub-valores são iguais → colapsa para valor único
+    item = make_item('espadas', stats={'attackPower': quad_ap(50, 50, 50, 50)})
+    out = aggregate_by_assets([item])
+    assert out['stats']['attackPower'] == 50
+
+def test_attackpower_quad_collapses_when_no_spread():
+    # quad onde mn_min==mn_max e mx_min==mx_max → colapsa para lista de 2
+    item = make_item('espadas', stats={'attackPower': quad_ap(30, 30, 60, 60)})
+    out = aggregate_by_assets([item])
+    assert out['stats']['attackPower'] == [30, 60]

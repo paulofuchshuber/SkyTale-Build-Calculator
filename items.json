@@ -31,7 +31,7 @@
           "absorption": 0.1,
           "absorption_max": 0.2
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda102.bmp"
@@ -72,7 +72,7 @@
           "absorption": 0.1,
           "absorption_max": 0.3
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda103.bmp"
@@ -117,7 +117,7 @@
           "absorption": 0.2,
           "absorption_max": 0.3
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda104.bmp"
@@ -160,7 +160,7 @@
             }
           }
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda105.bmp"
@@ -205,7 +205,7 @@
           "absorption": 0.2,
           "absorption_max": 0.4
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda106.bmp"
@@ -250,7 +250,7 @@
           "absorption": 0.2,
           "absorption_max": 0.4
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda107.bmp"
@@ -295,7 +295,7 @@
           "absorption": 0.3,
           "absorption_max": 0.4
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda108.bmp"
@@ -340,7 +340,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda109.bmp"
@@ -385,7 +385,7 @@
           "absorption": 0.5,
           "absorption_max": 0.7
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda110.bmp"
@@ -430,7 +430,7 @@
           "absorption": 0.5,
           "absorption_max": 0.8
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda111.bmp"
@@ -475,7 +475,7 @@
           "absorption": 0.7,
           "absorption_max": 1.0
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda112.bmp"
@@ -520,7 +520,7 @@
           "absorption": 0.7,
           "absorption_max": 1.1
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda113.bmp"
@@ -565,7 +565,7 @@
           "absorption": 0.8,
           "absorption_max": 1.0
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda114.bmp"
@@ -610,7 +610,7 @@
           "absorption": 0.8,
           "absorption_max": 1.2
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda115.bmp"
@@ -655,7 +655,7 @@
           "absorption": 0.7,
           "absorption_max": 1.3
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda116.bmp"
@@ -700,7 +700,7 @@
           "absorption": 0.8,
           "absorption_max": 1.3
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda117.bmp"
@@ -745,7 +745,7 @@
           "absorption": 0.9,
           "absorption_max": 1.4
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda118.bmp"
@@ -790,7 +790,7 @@
           "absorption": 1.0,
           "absorption_max": 1.4
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda119.bmp"
@@ -835,7 +835,7 @@
           "absorption": 1.0,
           "absorption_max": 1.5
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda120.bmp"
@@ -880,7 +880,7 @@
           "absorption": 1.2,
           "absorption_max": 1.5
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda121.bmp"
@@ -925,7 +925,7 @@
           "absorption": 1.4,
           "absorption_max": 1.6
         },
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda123.bmp"
@@ -2563,7 +2563,7 @@
           "absorption": 0.2,
           "absorption_max": 0.3
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda202.bmp"
@@ -2606,7 +2606,7 @@
           "absorption": 0.2,
           "absorption_max": 0.4
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda203.bmp"
@@ -2650,7 +2650,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda204.bmp"
@@ -2694,7 +2694,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda205.bmp"
@@ -2738,7 +2738,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda206.bmp"
@@ -2782,7 +2782,7 @@
           "absorption": 0.4,
           "absorption_max": 0.6
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda207.bmp"
@@ -2826,7 +2826,7 @@
           "absorption": 0.5,
           "absorption_max": 0.7
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda208.bmp"
@@ -2870,7 +2870,7 @@
           "absorption": 0.5,
           "absorption_max": 0.8
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda209.bmp"
@@ -2914,7 +2914,7 @@
           "absorption": 0.5,
           "absorption_max": 1.0
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda210.bmp"
@@ -2958,7 +2958,7 @@
           "absorption": 0.8,
           "absorption_max": 1.0
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda211.bmp"
@@ -3002,7 +3002,7 @@
           "absorption": 0.7,
           "absorption_max": 1.1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda212.bmp"
@@ -3046,7 +3046,7 @@
           "absorption": 0.8,
           "absorption_max": 1.0
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda213.bmp"
@@ -3090,7 +3090,7 @@
           "absorption": 0.8,
           "absorption_max": 1.1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda214.bmp"
@@ -3134,7 +3134,7 @@
           "absorption": 0.9,
           "absorption_max": 1.2
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda215.bmp"
@@ -3178,7 +3178,7 @@
           "absorption": 1.0,
           "absorption_max": 1.3
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda216.bmp"
@@ -3222,7 +3222,7 @@
           "absorption": 1.0,
           "absorption_max": 1.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda217.BMP"
@@ -3266,7 +3266,7 @@
           "absorption": 1.0,
           "absorption_max": 1.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda218.BMP"
@@ -3310,7 +3310,7 @@
           "absorption": 1.0,
           "absorption_max": 1.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda219.BMP"
@@ -3354,7 +3354,7 @@
           "absorption": 1.0,
           "absorption_max": 1.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda220.BMP"
@@ -3398,7 +3398,7 @@
           "absorption": 1.0,
           "absorption_max": 1.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda221.BMP"
@@ -3442,7 +3442,7 @@
           "absorption": 1.2,
           "absorption_max": 1.7
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itda223.bmp"
@@ -4389,7 +4389,7 @@
           "absorption": 0.3,
           "absorption_max": 0.4
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom101.bmp"
@@ -4420,7 +4420,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom102.bmp"
@@ -4451,7 +4451,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom103.bmp"
@@ -4484,7 +4484,7 @@
           "absorption": 0.3,
           "absorption_max": 0.5
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom104.bmp"
@@ -4517,7 +4517,7 @@
           "absorption": 0.4,
           "absorption_max": 0.6
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom105.bmp"
@@ -4550,7 +4550,7 @@
           "absorption": 0.4,
           "absorption_max": 0.6
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom106.bmp"
@@ -4583,7 +4583,7 @@
           "absorption": 0.5,
           "absorption_max": 0.7
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom107.bmp"
@@ -4616,7 +4616,7 @@
           "absorption": 0.5,
           "absorption_max": 0.7
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom108.bmp"
@@ -4649,7 +4649,7 @@
           "absorption": 0.6,
           "absorption_max": 0.8
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom109.bmp"
@@ -4682,7 +4682,7 @@
           "absorption": 0.6,
           "absorption_max": 0.9
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom110.bmp"
@@ -4715,7 +4715,7 @@
           "absorption": 0.7,
           "absorption_max": 0.9
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom111.bmp"
@@ -4748,7 +4748,7 @@
           "absorption": 0.9,
           "absorption_max": 1.1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom112.bmp"
@@ -4781,7 +4781,7 @@
           "absorption": 0.7,
           "absorption_max": 1.0
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom113.bmp"
@@ -4814,7 +4814,7 @@
           "absorption": 0.8,
           "absorption_max": 1.1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom114.bmp"
@@ -4847,7 +4847,7 @@
           "absorption": 0.8,
           "absorption_max": 1.2
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom115.bmp"
@@ -4880,7 +4880,7 @@
           "absorption": 0.9,
           "absorption_max": 1.2
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom116.BMP"
@@ -4913,7 +4913,7 @@
           "absorption": 0.9,
           "absorption_max": 1.3
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom117.bmp"
@@ -4946,7 +4946,7 @@
           "absorption": 1.0,
           "absorption_max": 1.3
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom118.bmp"
@@ -4979,7 +4979,7 @@
           "absorption": 1.0,
           "absorption_max": 1.4
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom119.bmp"
@@ -5012,7 +5012,7 @@
           "absorption": 1.0,
           "absorption_max": 1.4
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom120.bmp"
@@ -5046,7 +5046,7 @@
           "absorption": 1.2,
           "absorption_max": 1.6
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itom122.bmp"
@@ -5090,7 +5090,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa101.bmp"
@@ -5132,7 +5132,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa102.bmp"
@@ -5177,7 +5177,7 @@
           },
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa103.bmp"
@@ -5223,7 +5223,7 @@
           },
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa104.bmp"
@@ -5262,7 +5262,7 @@
           "attackRating_max": 3,
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa105.bmp"
@@ -5308,7 +5308,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa106.bmp"
@@ -5356,7 +5356,7 @@
           "attackRating_max": 3,
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa107.bmp"
@@ -5405,7 +5405,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa108.bmp"
@@ -5452,7 +5452,7 @@
           },
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa109.bmp"
@@ -5502,7 +5502,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa110.bmp"
@@ -5551,7 +5551,7 @@
           "attackRating_max": 3,
           "critical": 2
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa111.bmp"
@@ -5601,7 +5601,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa112.bmp"
@@ -5651,7 +5651,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa113.bmp"
@@ -5697,7 +5697,7 @@
           },
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa114.bmp"
@@ -5746,7 +5746,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa115.bmp"
@@ -5795,7 +5795,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa116.bmp"
@@ -5844,7 +5844,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa117.bmp"
@@ -5893,7 +5893,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa118.bmp"
@@ -5942,7 +5942,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa119.bmp"
@@ -5991,7 +5991,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Mechanician Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwa121.BMP"
@@ -6049,7 +6049,7 @@
           "attackSpeed": 1,
           "critical": 5
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc101.bmp"
@@ -6105,7 +6105,7 @@
           "attackSpeed": 1,
           "critical": 5
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc102.bmp"
@@ -6163,7 +6163,7 @@
           "attackSpeed": 2,
           "critical": 6
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc103.bmp"
@@ -6221,7 +6221,7 @@
           "attackSpeed": 1,
           "critical": 5
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc104.bmp"
@@ -6279,7 +6279,7 @@
           "attackSpeed": 2,
           "critical": 5
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc105.bmp"
@@ -6329,7 +6329,7 @@
           "attackSpeed": 1,
           "critical": 5
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc106.bmp"
@@ -6377,7 +6377,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc107.bmp"
@@ -6427,7 +6427,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc108.bmp"
@@ -6485,7 +6485,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc109.bmp"
@@ -6543,7 +6543,7 @@
           "attackSpeed": 2,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc110.bmp"
@@ -6600,7 +6600,7 @@
           },
           "attackSpeed": 2
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc111.bmp"
@@ -6658,7 +6658,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc112.bmp"
@@ -6716,7 +6716,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc113.bmp"
@@ -6774,7 +6774,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc114.bmp"
@@ -6833,7 +6833,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc115.bmp"
@@ -6892,7 +6892,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc116.bmp"
@@ -6951,7 +6951,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc117.bmp"
@@ -7010,7 +7010,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc118.bmp"
@@ -7069,7 +7069,7 @@
           "attackRating_max": 3,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc119.bmp"
@@ -7128,7 +7128,7 @@
           "attackRating_max": 3,
           "critical": 4
         },
-        "primaryClass": "Fighter Pikeman Knight Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwc121.BMP"
@@ -7174,7 +7174,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp101.bmp"
@@ -7219,7 +7219,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp102.bmp"
@@ -7257,7 +7257,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp103.bmp"
@@ -7306,7 +7306,7 @@
           "attackRating_max": 3,
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp104.bmp"
@@ -7354,7 +7354,7 @@
           "attackSpeed": 2,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp105.bmp"
@@ -7403,7 +7403,7 @@
           "attackRating_max": 3,
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp106.bmp"
@@ -7453,7 +7453,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp107.bmp"
@@ -7493,7 +7493,7 @@
           "attackSpeed": 2,
           "critical": 5
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp108.bmp"
@@ -7542,7 +7542,7 @@
           "attackRating_max": 3,
           "attackSpeed": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp109.bmp"
@@ -7592,7 +7592,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp110.bmp"
@@ -7642,7 +7642,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp111.bmp"
@@ -7692,7 +7692,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp112.bmp"
@@ -7740,7 +7740,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp113.bmp"
@@ -7789,7 +7789,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp114.bmp"
@@ -7839,7 +7839,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp115.bmp"
@@ -7889,7 +7889,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp116.BMP"
@@ -7939,7 +7939,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp117.BMP"
@@ -7989,7 +7989,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp118.bmp"
@@ -8039,7 +8039,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp119.bmp"
@@ -8089,7 +8089,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp120.bmp"
@@ -8139,7 +8139,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwp122.bmp"
@@ -8173,7 +8173,7 @@
         "bonuses": {
           "critical": 2
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh101.bmp"
@@ -8215,7 +8215,7 @@
           },
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh102.bmp"
@@ -8252,7 +8252,7 @@
           "attackSpeed": 1,
           "critical": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh103.bmp"
@@ -8289,7 +8289,7 @@
           "attackSpeed": 1,
           "critical": 5
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh104.bmp"
@@ -8335,7 +8335,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh105.bmp"
@@ -8383,7 +8383,7 @@
           "attackSpeed": 2,
           "critical": 4
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh106.bmp"
@@ -8421,7 +8421,7 @@
           "attackSpeed": 1,
           "critical": 7
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh107.bmp"
@@ -8469,7 +8469,7 @@
           "attackRating_max": 3,
           "attackSpeed": 2
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh108.bmp"
@@ -8518,7 +8518,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh109.bmp"
@@ -8566,7 +8566,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh110.bmp"
@@ -8615,7 +8615,7 @@
           "attackRating_max": 3,
           "attackSpeed": 2
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh111.bmp"
@@ -8662,7 +8662,7 @@
           "attackSpeed": 2,
           "critical": 4
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh112.bmp"
@@ -8711,7 +8711,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh113.bmp"
@@ -8761,7 +8761,7 @@
           "attackSpeed": 2,
           "critical": 1
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh114.bmp"
@@ -8811,7 +8811,7 @@
           "attackSpeed": 2,
           "critical": 1
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh115.bmp"
@@ -8859,7 +8859,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh116.bmp"
@@ -8906,7 +8906,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh117.bmp"
@@ -8954,7 +8954,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh118.BMP"
@@ -9002,7 +9002,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh119.BMP"
@@ -9049,7 +9049,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh120.BMP"
@@ -9097,7 +9097,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Fighter Pikeman Knight"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwh122.BMP"
@@ -9136,7 +9136,7 @@
           "attackSpeed": 2,
           "critical": 3
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws101.bmp"
@@ -9173,7 +9173,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws102.bmp"
@@ -9220,7 +9220,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws103.bmp"
@@ -9258,7 +9258,7 @@
           "attackSpeed": 1,
           "critical": 7
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws104.bmp"
@@ -9299,7 +9299,7 @@
           "attackSpeed": 1,
           "critical": 5
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws105.bmp"
@@ -9339,7 +9339,7 @@
           "attackSpeed": 2,
           "critical": 5
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws106.bmp"
@@ -9390,7 +9390,7 @@
           "attackRange": 10,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws107.bmp"
@@ -9441,7 +9441,7 @@
           "attackRange": 15,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws108.bmp"
@@ -9492,7 +9492,7 @@
           "attackRange": 15,
           "critical": 4
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws109.bmp"
@@ -9534,7 +9534,7 @@
           "attackSpeed": 1,
           "critical": 8
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws110.bmp"
@@ -9585,7 +9585,7 @@
           "attackRange": 15,
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws111.bmp"
@@ -9636,7 +9636,7 @@
           "attackRange": 10,
           "attackSpeed": 2
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws112.bmp"
@@ -9688,7 +9688,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws113.bmp"
@@ -9737,7 +9737,7 @@
           "attackRange": 10,
           "critical": 5
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws114.bmp"
@@ -9787,7 +9787,7 @@
           "attackRating_max": 3,
           "attackRange": 20
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws115.bmp"
@@ -9837,7 +9837,7 @@
           "attackRating_max": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws116.bmp"
@@ -9887,7 +9887,7 @@
           "attackRating_max": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws117.BMP"
@@ -9937,7 +9937,7 @@
           "attackRating_max": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws118.BMP"
@@ -9987,7 +9987,7 @@
           "attackRating_max": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws119.bmp"
@@ -10037,7 +10037,7 @@
           "attackRating_max": 3,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws120.BMP"
@@ -10087,7 +10087,7 @@
           "attackRating_max": 3,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws121.bmp"
@@ -10137,7 +10137,7 @@
           "attackRating_max": 3,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Atalanta"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws123.bmp"
@@ -10172,7 +10172,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm101.bmp"
@@ -10205,7 +10205,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm102.bmp"
@@ -10238,7 +10238,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm103.bmp"
@@ -10275,7 +10275,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm104.bmp"
@@ -10312,7 +10312,7 @@
         "bonuses": {
           "attackSpeed": 2
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm105.bmp"
@@ -10348,7 +10348,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm106.bmp"
@@ -10384,7 +10384,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm107.bmp"
@@ -10422,7 +10422,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm108.bmp"
@@ -10460,7 +10460,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm109.bmp"
@@ -10498,7 +10498,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm110.bmp"
@@ -10532,7 +10532,7 @@
       },
       "spec": {
         "bonuses": {},
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm111.bmp"
@@ -10569,7 +10569,7 @@
         "bonuses": {
           "attackSpeed": 2
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm112.bmp"
@@ -10605,7 +10605,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm113.bmp"
@@ -10643,7 +10643,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm114.bmp"
@@ -10680,7 +10680,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm115.bmp"
@@ -10718,7 +10718,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm116.bmp"
@@ -10755,7 +10755,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm117.BMP"
@@ -10791,7 +10791,7 @@
       },
       "spec": {
         "bonuses": {},
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm118.bmp"
@@ -10827,7 +10827,7 @@
       },
       "spec": {
         "bonuses": {},
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm119.bmp"
@@ -10864,7 +10864,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm120.BMP"
@@ -10901,7 +10901,7 @@
         "bonuses": {
           "attackSpeed": 1
         },
-        "primaryClass": "Priestess Magician"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwm122.bmp"
@@ -10947,7 +10947,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws201.bmp"
@@ -10990,7 +10990,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws202.bmp"
@@ -11034,7 +11034,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws203.bmp"
@@ -11080,7 +11080,7 @@
           "attackRating": 1,
           "attackRating_max": 3
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws204.bmp"
@@ -11118,7 +11118,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws205.bmp"
@@ -11164,7 +11164,7 @@
           },
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws206.bmp"
@@ -11210,7 +11210,7 @@
           },
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws207.bmp"
@@ -11248,7 +11248,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws208.bmp"
@@ -11305,7 +11305,7 @@
           },
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws209.bmp"
@@ -11354,7 +11354,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws210.bmp"
@@ -11403,7 +11403,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws211.bmp"
@@ -11453,7 +11453,7 @@
           "attackSpeed": 2,
           "critical": 3
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws212.bmp"
@@ -11502,7 +11502,7 @@
           "attackRating_max": 3,
           "attackSpeed": 1
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws213.bmp"
@@ -11549,7 +11549,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws214.bmp"
@@ -11597,7 +11597,7 @@
           "attackSpeed": 1,
           "critical": 7
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws215.bmp"
@@ -11647,7 +11647,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws216.bmp"
@@ -11696,7 +11696,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws217.bmp"
@@ -11746,7 +11746,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws218.bmp"
@@ -11796,7 +11796,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws219.bmp"
@@ -11845,7 +11845,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws220.bmp"
@@ -11895,7 +11895,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws221.bmp"
@@ -11944,7 +11944,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws222.bmp"
@@ -11994,7 +11994,7 @@
           "attackSpeed": 1,
           "critical": 4
         },
-        "primaryClass": "Mechanician Fighter Pikeman"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itws224.BMP"
@@ -12040,7 +12040,7 @@
           "attackSpeed": 1,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt101.bmp"
@@ -12084,7 +12084,7 @@
           "attackSpeed": 2,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt102.bmp"
@@ -12130,7 +12130,7 @@
           "critical": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt103.bmp"
@@ -12179,7 +12179,7 @@
           "critical": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt104.bmp"
@@ -12227,7 +12227,7 @@
           "critical": 3,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt105.bmp"
@@ -12274,7 +12274,7 @@
           "critical": 3,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt106.bmp"
@@ -12314,7 +12314,7 @@
           "critical": 7,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt107.bmp"
@@ -12364,7 +12364,7 @@
           "critical": 3,
           "attackRange": 10
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt108.bmp"
@@ -12413,7 +12413,7 @@
           "critical": 3,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt109.bmp"
@@ -12453,7 +12453,7 @@
           "critical": 6,
           "attackRange": 20
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt110.bmp"
@@ -12502,7 +12502,7 @@
           "attackSpeed": 2,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt111.bmp"
@@ -12552,7 +12552,7 @@
           "critical": 5,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt112.bmp"
@@ -12601,7 +12601,7 @@
           "attackSpeed": 2,
           "critical": 5
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt113.bmp"
@@ -12650,7 +12650,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt114.bmp"
@@ -12699,7 +12699,7 @@
           "attackSpeed": 1,
           "critical": 6
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt115.bmp"
@@ -12747,7 +12747,7 @@
           },
           "critical": 5
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt116.bmp"
@@ -12795,7 +12795,7 @@
           },
           "critical": 5
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt117.bmp"
@@ -12844,7 +12844,7 @@
           "critical": 5,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt118.bmp"
@@ -12893,7 +12893,7 @@
           "critical": 5,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt119.bmp"
@@ -12942,7 +12942,7 @@
           "critical": 5,
           "attackRange": 15
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt120.bmp"
@@ -12991,7 +12991,7 @@
           "critical": 5,
           "attackRange": 20
         },
-        "primaryClass": "Mechanician Archer"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itwt122.bmp"
@@ -13723,7 +13723,7 @@
         "intelligence": 70
       },
       "spec": {
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Mage Shaman Assassin Guerriera"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itor120.jpg"
@@ -13763,7 +13763,7 @@
         "intelligence": 70
       },
       "spec": {
-        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Mage Shaman Assassin Guerriera"
+        "primaryClass": "Mechanician Fighter Pikeman Archer Knight Atalanta Priestess Magician"
       },
       "assets": {
         "assetFile": "assets/items/itoa120.jpg"
